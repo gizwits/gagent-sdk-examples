@@ -73,7 +73,7 @@ void sample(datapoints::DataPoints& candidate, std::uint64_t now) noexcept {
 #endif
         const bool ready = application->online();
         if (hardware_ready) hardware::show(ui::indicator(ready,
-            application->onboarding().is_open(now), streaming, now));
+            application->onboarding().is_open(now), candidate.value_start_stream, streaming, now));
         if (online != ready) {
             online = ready;
             ESP_LOGI("sdk_basic", "IoT MQTT %s", online ? "ready" : "offline");

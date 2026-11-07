@@ -28,9 +28,12 @@ private:
     bool initialized_=false, raw_=false, stable_=false, armed_=false;
     std::uint64_t changed_=0;
 };
-// 配网/掉线优先红闪；只有实际推流成功才显示蓝色。低亮度便于近距离调试。
-constexpr Color indicator(bool online, bool pairing, bool streaming, std::uint64_t now) noexcept {
+// 配网/掉线优先红闪；启动已接受但尚未连接时蓝闪，实际推流后蓝色常亮。
+constexpr Color indicator(bool online, bool pairing, bool requested, bool streaming, std::uint64_t now) noexcept {
     if (pairing || !online) return now%1000<500 ? Color{16,0,0} : Color{};
-    return streaming ? Color{0,0,16} : Color{0,16,0};
+    if (streaming) return {0,0,16};
+    // 包括请求排队、建立连接及失败重试，让按键操作及时获得反馈。
+    if (requested) return now%500<250 ? Color{0,0,16} : Color{};
+    return {0,16,0};
 }
 }
