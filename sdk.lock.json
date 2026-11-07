@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "example": "p4_iot_basic",
+  "target": "esp32p4",
+  "cloud_provider": "gizwits",
+  "ble_protocol": "v2",
+  "camera": true,
+  "idf_revision": "2f8327156dd1f3c010413a6d47c9f86a607be498",
+  "compiler_version": "15.2.0",
+  "producer_version": "f06e5b401070",
+  "manifest_sha256": "a1b9189923d4c2b0f52ad5c6ac287aed2a66268ef1b87a9615b36ec823baa30c"
+}

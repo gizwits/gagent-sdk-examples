@@ -1,0 +1,2150 @@
+{
+  "name": "ipccam",
+  "packetVersion": "0x00000004",
+  "protocolType": "var_len",
+  "product_key": "00000000000000000000000000000000",
+  "entities": [
+    {
+      "display_name": "机智云开发套件",
+      "attrs": [
+        {
+          "display_name": "推流",
+          "name": "start_stream",
+          "data_type": "bool",
+          "position": {
+            "byte_offset": 0,
+            "unit": "bit",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "type": "status_writable",
+          "id": 0,
+          "desc": ""
+        },
+        {
+          "display_name": "feed_now",
+          "name": "feed_now",
+          "data_type": "bool",
+          "position": {
+            "byte_offset": 0,
+            "unit": "bit",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "type": "status_writable",
+          "id": 1,
+          "desc": "立即投喂"
+        },
+        {
+          "display_name": "feeding",
+          "name": "feeding",
+          "data_type": "bool",
+          "position": {
+            "byte_offset": 0,
+            "unit": "bit",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "type": "status_readonly",
+          "id": 2,
+          "desc": "电机状态"
+        },
+        {
+          "display_name": "food_low",
+          "name": "food_low",
+          "data_type": "bool",
+          "position": {
+            "byte_offset": 0,
+            "unit": "bit",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "type": "status_readonly",
+          "id": 3,
+          "desc": "余粮不足"
+        },
+        {
+          "display_name": "cat_present",
+          "name": "cat_present",
+          "data_type": "bool",
+          "position": {
+            "byte_offset": 0,
+            "unit": "bit",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "type": "status_readonly",
+          "id": 4,
+          "desc": "当前是否检测到猫"
+        },
+        {
+          "display_name": "enabled_2",
+          "name": "enabled_2",
+          "data_type": "bool",
+          "position": {
+            "byte_offset": 0,
+            "unit": "bit",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "type": "status_writable",
+          "id": 5,
+          "desc": ""
+        },
+        {
+          "display_name": "enabled_3",
+          "name": "enabled_3",
+          "data_type": "bool",
+          "position": {
+            "byte_offset": 0,
+            "unit": "bit",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "type": "status_writable",
+          "id": 6,
+          "desc": ""
+        },
+        {
+          "display_name": "enabled_4",
+          "name": "enabled_4",
+          "data_type": "bool",
+          "position": {
+            "byte_offset": 0,
+            "unit": "bit",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "type": "status_writable",
+          "id": 7,
+          "desc": ""
+        },
+        {
+          "display_name": "enabled_5",
+          "name": "enabled_5",
+          "data_type": "bool",
+          "position": {
+            "byte_offset": 0,
+            "unit": "bit",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "type": "status_writable",
+          "id": 8,
+          "desc": ""
+        },
+        {
+          "display_name": "enabled_6",
+          "name": "enabled_6",
+          "data_type": "bool",
+          "position": {
+            "byte_offset": 0,
+            "unit": "bit",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "type": "status_writable",
+          "id": 9,
+          "desc": ""
+        },
+        {
+          "display_name": "enabled_7",
+          "name": "enabled_7",
+          "data_type": "bool",
+          "position": {
+            "byte_offset": 0,
+            "unit": "bit",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "type": "status_writable",
+          "id": 10,
+          "desc": ""
+        },
+        {
+          "display_name": "enabled_8",
+          "name": "enabled_8",
+          "data_type": "bool",
+          "position": {
+            "byte_offset": 0,
+            "unit": "bit",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "type": "status_writable",
+          "id": 11,
+          "desc": ""
+        },
+        {
+          "display_name": "enabled_9",
+          "name": "enabled_9",
+          "data_type": "bool",
+          "position": {
+            "byte_offset": 0,
+            "unit": "bit",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "type": "status_writable",
+          "id": 12,
+          "desc": ""
+        },
+        {
+          "display_name": "enabled_10",
+          "name": "enabled_10",
+          "data_type": "bool",
+          "position": {
+            "byte_offset": 0,
+            "unit": "bit",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "type": "status_writable",
+          "id": 13,
+          "desc": ""
+        },
+        {
+          "display_name": "enabled_1",
+          "name": "enabled_1",
+          "data_type": "bool",
+          "position": {
+            "byte_offset": 0,
+            "unit": "bit",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "type": "status_writable",
+          "id": 14,
+          "desc": ""
+        },
+        {
+          "display_name": "feed_portion",
+          "name": "feed_portion",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 15,
+          "desc": "份数"
+        },
+        {
+          "display_name": "feed_result",
+          "name": "feed_result",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 10,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_readonly",
+          "id": 16,
+          "desc": "0空闲 / 1成功 / 2堵转 / 3缺粮 / 4超时"
+        },
+        {
+          "display_name": "hour_1",
+          "name": "hour_1",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 17,
+          "desc": ""
+        },
+        {
+          "display_name": "minute_1",
+          "name": "minute_1",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 18,
+          "desc": ""
+        },
+        {
+          "display_name": "portion_1",
+          "name": "portion_1",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 19,
+          "desc": ""
+        },
+        {
+          "display_name": "days_1",
+          "name": "days_1",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 20,
+          "desc": "值\t含义\nbit0\n周一\nbit1\n周二\nbit2\n周三\nbit3\n周四\nbit4\n周五\nbit5\n周六\nbit6\n周日\nbit7\n保留，恒为 0"
+        },
+        {
+          "display_name": "hour_2",
+          "name": "hour_2",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 21,
+          "desc": ""
+        },
+        {
+          "display_name": "minute_2",
+          "name": "minute_2",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 22,
+          "desc": ""
+        },
+        {
+          "display_name": "portion_2",
+          "name": "portion_2",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 23,
+          "desc": ""
+        },
+        {
+          "display_name": "days_2",
+          "name": "days_2",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 24,
+          "desc": ""
+        },
+        {
+          "display_name": "hour_3",
+          "name": "hour_3",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 25,
+          "desc": ""
+        },
+        {
+          "display_name": "minute_3",
+          "name": "minute_3",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 26,
+          "desc": ""
+        },
+        {
+          "display_name": "portion_3",
+          "name": "portion_3",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 27,
+          "desc": ""
+        },
+        {
+          "display_name": "days_3",
+          "name": "days_3",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 28,
+          "desc": ""
+        },
+        {
+          "display_name": "hour_4",
+          "name": "hour_4",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 29,
+          "desc": ""
+        },
+        {
+          "display_name": "minute_4",
+          "name": "minute_4",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 30,
+          "desc": ""
+        },
+        {
+          "display_name": "portion_4",
+          "name": "portion_4",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 31,
+          "desc": ""
+        },
+        {
+          "display_name": "days_4",
+          "name": "days_4",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 32,
+          "desc": ""
+        },
+        {
+          "display_name": "hour_5",
+          "name": "hour_5",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 33,
+          "desc": ""
+        },
+        {
+          "display_name": "minute_5",
+          "name": "minute_5",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 34,
+          "desc": ""
+        },
+        {
+          "display_name": "portion_5",
+          "name": "portion_5",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 35,
+          "desc": ""
+        },
+        {
+          "display_name": "days_5",
+          "name": "days_5",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 36,
+          "desc": ""
+        },
+        {
+          "display_name": "hour_6",
+          "name": "hour_6",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 37,
+          "desc": ""
+        },
+        {
+          "display_name": "minute_6",
+          "name": "minute_6",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 38,
+          "desc": ""
+        },
+        {
+          "display_name": "portion_6",
+          "name": "portion_6",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 39,
+          "desc": ""
+        },
+        {
+          "display_name": "days_6",
+          "name": "days_6",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 40,
+          "desc": ""
+        },
+        {
+          "display_name": "hour_7",
+          "name": "hour_7",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 41,
+          "desc": ""
+        },
+        {
+          "display_name": "minute_7",
+          "name": "minute_7",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 42,
+          "desc": ""
+        },
+        {
+          "display_name": "portion_7",
+          "name": "portion_7",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 43,
+          "desc": ""
+        },
+        {
+          "display_name": "days_7",
+          "name": "days_7",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 44,
+          "desc": ""
+        },
+        {
+          "display_name": "hour_8",
+          "name": "hour_8",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 45,
+          "desc": ""
+        },
+        {
+          "display_name": "minute_8",
+          "name": "minute_8",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 46,
+          "desc": ""
+        },
+        {
+          "display_name": "portion_8",
+          "name": "portion_8",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 47,
+          "desc": ""
+        },
+        {
+          "display_name": "days_8",
+          "name": "days_8",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 48,
+          "desc": ""
+        },
+        {
+          "display_name": "hour_9",
+          "name": "hour_9",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 49,
+          "desc": ""
+        },
+        {
+          "display_name": "minute_9",
+          "name": "minute_9",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 50,
+          "desc": ""
+        },
+        {
+          "display_name": "portion_9",
+          "name": "portion_9",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 51,
+          "desc": ""
+        },
+        {
+          "display_name": "days_9",
+          "name": "days_9",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 52,
+          "desc": ""
+        },
+        {
+          "display_name": "hour_10",
+          "name": "hour_10",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 53,
+          "desc": ""
+        },
+        {
+          "display_name": "minute_10",
+          "name": "minute_10",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 54,
+          "desc": ""
+        },
+        {
+          "display_name": "portion_10",
+          "name": "portion_10",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 55,
+          "desc": ""
+        },
+        {
+          "display_name": "days_10",
+          "name": "days_10",
+          "data_type": "uint8",
+          "position": {
+            "byte_offset": 0,
+            "unit": "byte",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 255,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 56,
+          "desc": ""
+        }
+      ],
+      "name": "entity0",
+      "id": 0
+    }
+  ],
+  "ui": {
+    "object": {
+      "version": 4,
+      "showEditButton": false
+    },
+    "sections": [
+      {
+        "elements": [
+          {
+            "boolValue": false,
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.start_stream"
+              ],
+              "perm": "W"
+            },
+            "type": "QBooleanElement",
+            "key": "entity0.start_stream",
+            "title": "推流"
+          },
+          {
+            "boolValue": false,
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.feed_now"
+              ],
+              "perm": "W"
+            },
+            "type": "QBooleanElement",
+            "key": "entity0.feed_now",
+            "title": "feed_now"
+          },
+          {
+            "boolValue": false,
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.feeding"
+              ],
+              "perm": "N"
+            },
+            "type": "QBooleanElement",
+            "key": "entity0.feeding",
+            "title": "feeding"
+          },
+          {
+            "boolValue": false,
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.food_low"
+              ],
+              "perm": "N"
+            },
+            "type": "QBooleanElement",
+            "key": "entity0.food_low",
+            "title": "food_low"
+          },
+          {
+            "boolValue": false,
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.cat_present"
+              ],
+              "perm": "N"
+            },
+            "type": "QBooleanElement",
+            "key": "entity0.cat_present",
+            "title": "cat_present"
+          },
+          {
+            "boolValue": false,
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.enabled_2"
+              ],
+              "perm": "W"
+            },
+            "type": "QBooleanElement",
+            "key": "entity0.enabled_2",
+            "title": "enabled_2"
+          },
+          {
+            "boolValue": false,
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.enabled_3"
+              ],
+              "perm": "W"
+            },
+            "type": "QBooleanElement",
+            "key": "entity0.enabled_3",
+            "title": "enabled_3"
+          },
+          {
+            "boolValue": false,
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.enabled_4"
+              ],
+              "perm": "W"
+            },
+            "type": "QBooleanElement",
+            "key": "entity0.enabled_4",
+            "title": "enabled_4"
+          },
+          {
+            "boolValue": false,
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.enabled_5"
+              ],
+              "perm": "W"
+            },
+            "type": "QBooleanElement",
+            "key": "entity0.enabled_5",
+            "title": "enabled_5"
+          },
+          {
+            "boolValue": false,
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.enabled_6"
+              ],
+              "perm": "W"
+            },
+            "type": "QBooleanElement",
+            "key": "entity0.enabled_6",
+            "title": "enabled_6"
+          },
+          {
+            "boolValue": false,
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.enabled_7"
+              ],
+              "perm": "W"
+            },
+            "type": "QBooleanElement",
+            "key": "entity0.enabled_7",
+            "title": "enabled_7"
+          },
+          {
+            "boolValue": false,
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.enabled_8"
+              ],
+              "perm": "W"
+            },
+            "type": "QBooleanElement",
+            "key": "entity0.enabled_8",
+            "title": "enabled_8"
+          },
+          {
+            "boolValue": false,
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.enabled_9"
+              ],
+              "perm": "W"
+            },
+            "type": "QBooleanElement",
+            "key": "entity0.enabled_9",
+            "title": "enabled_9"
+          },
+          {
+            "boolValue": false,
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.enabled_10"
+              ],
+              "perm": "W"
+            },
+            "type": "QBooleanElement",
+            "key": "entity0.enabled_10",
+            "title": "enabled_10"
+          },
+          {
+            "boolValue": false,
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.enabled_1"
+              ],
+              "perm": "W"
+            },
+            "type": "QBooleanElement",
+            "key": "entity0.enabled_1",
+            "title": "enabled_1"
+          },
+          {
+            "title": "feed_portion",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.feed_portion"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.feed_portion",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.feed_result"
+              ],
+              "uint_spec": {
+                "max": 10,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "N"
+            },
+            "type": "QLabelElement",
+            "key": "entity0.feed_result",
+            "title": "feed_result"
+          },
+          {
+            "title": "hour_1",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.hour_1"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.hour_1",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "minute_1",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.minute_1"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.minute_1",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "portion_1",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.portion_1"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.portion_1",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "days_1",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.days_1"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.days_1",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "hour_2",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.hour_2"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.hour_2",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "minute_2",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.minute_2"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.minute_2",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "portion_2",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.portion_2"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.portion_2",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "days_2",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.days_2"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.days_2",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "hour_3",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.hour_3"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.hour_3",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "minute_3",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.minute_3"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.minute_3",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "portion_3",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.portion_3"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.portion_3",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "days_3",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.days_3"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.days_3",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "hour_4",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.hour_4"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.hour_4",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "minute_4",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.minute_4"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.minute_4",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "portion_4",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.portion_4"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.portion_4",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "days_4",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.days_4"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.days_4",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "hour_5",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.hour_5"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.hour_5",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "minute_5",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.minute_5"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.minute_5",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "portion_5",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.portion_5"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.portion_5",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "days_5",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.days_5"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.days_5",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "hour_6",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.hour_6"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.hour_6",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "minute_6",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.minute_6"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.minute_6",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "portion_6",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.portion_6"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.portion_6",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "days_6",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.days_6"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.days_6",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "hour_7",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.hour_7"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.hour_7",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "minute_7",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.minute_7"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.minute_7",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "portion_7",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.portion_7"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.portion_7",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "days_7",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.days_7"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.days_7",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "hour_8",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.hour_8"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.hour_8",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "minute_8",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.minute_8"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.minute_8",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "portion_8",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.portion_8"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.portion_8",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "days_8",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.days_8"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.days_8",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "hour_9",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.hour_9"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.hour_9",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "minute_9",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.minute_9"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.minute_9",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "portion_9",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.portion_9"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.portion_9",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "days_9",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.days_9"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.days_9",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "hour_10",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.hour_10"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.hour_10",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "minute_10",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.minute_10"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.minute_10",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "portion_10",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.portion_10"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.portion_10",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          },
+          {
+            "title": "days_10",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.days_10"
+              ],
+              "uint_spec": {
+                "max": 255,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.days_10",
+            "maximumValue": 255,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          }
+        ]
+      }
+    ]
+  }
+}

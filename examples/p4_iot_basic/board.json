@@ -1,0 +1,74 @@
+{
+  "mode": "soc",
+  "target": "esp32p4",
+  "flash_size": "16M",
+  "storage_writable": true,
+  "sources": [
+    "gizwits_protocol.cc",
+    "gizwits_product.cc",
+    "hardware.cc"
+  ],
+  "partitions": "partitions.csv",
+  "p4_hosted": {
+    "reset_active_high": true,
+    "power_pin": -1,
+    "power_active_high": true,
+    "power_delay_ms": 20,
+    "reserved_pins": [
+      2,
+      12,
+      52,
+      53,
+      54
+    ],
+    "chip": "esp32c61",
+    "transport": "sdio",
+    "reset_pin": 13,
+    "sdio": {
+      "cmd_pin": 19,
+      "clk_pin": 18,
+      "data_pins": [
+        14,
+        15,
+        16,
+        17
+      ],
+      "clock_khz": 40000,
+      "reset_delay_ms": 1500
+    }
+  },
+  "mcu_ota": false,
+  "camera": {
+    "enabled": true,
+    "sensor": "sc2336",
+    "i2c_port": 0,
+    "scl_pin": 8,
+    "sda_pin": 7,
+    "i2c_hz": 100000,
+    "xclk_pin": -1,
+    "xclk_hz": 24000000,
+    "reset_pin": -1,
+    "pwdn_pin": -1,
+    "power_pin": 0,
+    "power_active_high": true,
+    "power_delay_ms": 100,
+    "width": 1024,
+    "height": 600,
+    "fps": 30,
+    "bitrate": 1000000,
+    "detection": "none",
+    "score_threshold": 50,
+    "detect_interval_ms": 1000,
+    "confirm_frames": 3,
+    "absent_ms": 3000,
+    "auto_stream": false,
+    "event_duration_ms": 0,
+    "cooldown_ms": 60000,
+    "backend_url": "http://101.126.88.194:8080",
+    "whip_url": ""
+  },
+  "requires": [
+    "esp_driver_gpio",
+    "esp_driver_rmt"
+  ]
+}

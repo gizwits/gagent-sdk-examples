@@ -1,0 +1,12 @@
+# 本地 SDK、编译产物和个人配置不进入例程仓库。
+.DS_Store
+__pycache__/
+*.pyc
+**/gagent-sdk/
+**/build*/
+**/bootloader_components/
+**/sdkconfig
+**/sdkconfig.old
+**/product_secrets.hpp
+/artifacts/
+/.vscode/

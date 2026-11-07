@@ -1,0 +1,6 @@
+/build*/
+/gagent-sdk/
+/sdkconfig
+/sdkconfig.old
+/main/product_secrets.hpp
+/bootloader_components/

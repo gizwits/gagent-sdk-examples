@@ -1,0 +1,6 @@
+{
+  "generator": "soc-board-v1",
+  "product_key": "00000000000000000000000000000000",
+  "protocol_type": "var_len",
+  "datapoint_count": 57
+}

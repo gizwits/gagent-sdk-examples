@@ -1,0 +1,31 @@
+{
+  "linked": true,
+  "producer_sources_compiled": false,
+  "example_shipped": true,
+  "sdk_manifest_sha256": "a1b9189923d4c2b0f52ad5c6ac287aed2a66268ef1b87a9615b36ec823baa30c",
+  "consumer_bin_sha256": "7d92421ef332d057484615957e72aa6edd6e0627d6184bbc1444e91f3e5b7a9b",
+  "date": "2026-11-07",
+  "camera": true,
+  "idf_revision": "2f8327156dd1f3c010413a6d47c9f86a607be498",
+  "compiler_version": "15.2.0",
+  "hardware_tested": false,
+  "example_files_sha256": {
+    "CMakeLists.txt": "0e97f003884729cefd55e4c885e5a209756b8ffccf432d3a0b1559aa3910b8d7",
+    "board.json": "6fc8359214e2275a642afbce458166d50933e7f874e0605e5b719bd820d6ffae",
+    "main/CMakeLists.txt": "a5f28f4a487a8c393e58dd434987ee659061854fd619e09cdde3862b21edcfd0",
+    "main/app_main.cc": "8dd072c7c473f19e70dc8b9869a922d55c88c3b9ab8d38b825bc59b6ecdb6fee",
+    "main/board.cc": "f1e2fda407e17e261c40ff033d99ca677c7b4d0c8a1a84db5e0cd67b48c4411f",
+    "main/board_ui.hpp": "4f7a297078613b375beaf47fc20eac40b2c0693484531e21e2d40c3e85be44c8",
+    "main/datapoints.json": "9c3fbf645db4a0c6c3d835ee1c4ed31a3be89f97a9c5ed300e4f573a6640d2d3",
+    "main/generation.json": "b05d3d927e63fc060627023786fe1cfaa13e8dec7f04c89ef39840e6a095762c",
+    "main/gizwits_product.cc": "8adec4dbac035879cad552a668562b5d53b3a933936969ee7b2703230a23bda7",
+    "main/gizwits_product.hpp": "2435bf8886a236375770a317baea20ecf811124e15f9c5b13a8c3c6126fc44aa",
+    "main/gizwits_protocol.cc": "0004db24201d4d4742912b3292c26ed122e7198614275981266d7b34211499df",
+    "main/gizwits_protocol.hpp": "6e9aedc657f8005507d7572b30770c9be2a8611f0c3c58c189b70cc6a12daeaf",
+    "main/hardware.cc": "72b7bb3ce35cf8be089426c3850c55956fa9f0baa157c133ac58389ec9c67b48",
+    "main/hardware.hpp": "b026d4cf5b7bd21835e356cfbe2f961156cbeb0308fda386845a96c8e77bd15c",
+    "main/product_config.hpp": "b5d16d832e69d97b2a72e339d125ffa0fc137a5d4df8564af012fa43fd72d54e",
+    "partitions.csv": "cd058434eb534769d5080cc17b729e53296f5c8ca9af20fbaa1fde1248f18a92",
+    "sdkconfig.defaults": "d45595fe576d2817bc194a993539e34224bb1cdb188af2154bf7d582bace58d2"
+  }
+}
