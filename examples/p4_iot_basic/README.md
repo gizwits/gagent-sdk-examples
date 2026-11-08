@@ -51,7 +51,7 @@ idf.py -p YOUR_SERIAL_PORT flash monitor
 产品定义升级时在工程外执行随 SDK 附带的工具：
 
 ```sh
-python3 gagent-sdk/tools/generate_soc_board.py --pk 00000000000000000000000000000000 --datapoints main/datapoints.json --template-dir . --update
+python3 gagent-sdk/tools/generate_soc_board.py --pk 00000000000000000000000000000000 --datapoints main/datapoints.json --project-dir . --update
 ```
 
 只更新协议、快照和生成元信息，保留业务回调、凭据、启动与分区。更换 PK 应创建新模板，不能用 `--update` 覆盖另一个产品。模板配置与生成源码都属于应用，SDK 库中不包含测试产品身份。
