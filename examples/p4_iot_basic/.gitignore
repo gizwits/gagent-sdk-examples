@@ -1,5 +1,5 @@
 /build*/
-/gagent-sdk/
+/managed_components/
 /sdkconfig
 /sdkconfig.old
 /main/product_secrets.hpp

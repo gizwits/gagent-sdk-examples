@@ -1,0 +1,8 @@
+# The pinned IDF's C3 ROM erase workaround lacks IRAM_ATTR, and spi_flash's
+# linker fragment places it in IRAM only for the non-ROM implementation.
+# Keep this SDK wrapper cache-independent, including panic/coredump callers.
+[mapping:gagent_flash_rom]
+archive: libspi_flash.a
+entries:
+    if SPI_FLASH_ROM_IMPL = y && SPI_FLASH_PLACE_FUNCTIONS_IN_IRAM = y:
+        esp_flash_api: esp_flash_erase_region (noflash)

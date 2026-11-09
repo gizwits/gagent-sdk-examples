@@ -10,24 +10,18 @@
 
 ## 快速开始
 
-1. 准备 `sdk.lock.json` 指定提交的 ESP-IDF 6.1 和对应工具链，加载 `export.sh` 环境。
-2. 从 SDK 提供方取得匹配的摄像头 SDK 包，在仓库根目录安装：
+1. 准备 `sdk.lock.json` 指定提交的 ESP-IDF 6.1 和对应工具链，使用 CMake 3.24 或更新版本，加载 `export.sh` 环境。
+2. 仓库已包含匹配的精简摄像头 SDK，无需另行获取 SDK 包。在仓库根目录校验：
 
 ```sh
-python3 tools/install_sdk.py --archive /path/to/gagent-p4-camera-sdk.tar.gz
+python3 tools/install_sdk.py --verify-only
 ```
 
-也支持解压后的目录：
-
-```sh
-python3 tools/install_sdk.py --sdk-dir /path/to/gagent-sdk
-```
-
-3. 构建，连接测试板并烧录：
+3. 构建，连接测试板并烧录。首次构建需要联网访问乐鑫组件仓库：
 
 ```sh
 cd examples/p4_iot_basic
-IDF_COMPONENT_MANAGER=0 idf.py build
+IDF_COMPONENT_MANAGER=1 idf.py build
 idf.py -p YOUR_SERIAL_PORT flash monitor
 ```
 
@@ -55,7 +49,9 @@ RGB 灯为 GPIO51 的 WS2812，GRB 顺序。App 的 `start_stream` 与按键共�
 
 ## 版本与验收
 
-例程源码、中文文档、数据点快照和 SDK 锁定文件进入 Git。SDK 及随包依赖安装到 `gagent-sdk/`，与构建产物一同被忽略；构建不会自动下载 SDK。
+例程源码、中文文档、数据点快照和精简 SDK 均进入 Git。`sdk.lock.json` 校验 SDK 文件；`main/idf_component.yml` 声明第三方组件的精确版本，`dependencies.lock` 固定组件内容。构建通过 ESP-IDF Component Manager 下载依赖到 `managed_components/`，该目录与构建产物一同被忽略。
+
+SDK 约 26 MiB，只注册 6 个 GAgent 组件。定制的 WebRTC 接入代码以摄像头组件内部的配套静态库提供，不展开独立源码组件。mDNS、`esp-sr`、`esp-dl`、Hosted、音视频编解码等 Registry 组件不再随 SDK 提交。第三方组件下载后仍会占用本地磁盘；后续构建可复用下载结果。不要关闭 Component Manager，也不要手改 `managed_components/`。
 
 - [上板验收](docs/上板验收.md)
 - [例程维护与 SDK 升级](docs/维护说明.md)

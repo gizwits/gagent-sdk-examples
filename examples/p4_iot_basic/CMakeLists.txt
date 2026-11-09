@@ -1,4 +1,10 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.24)
+if("$ENV{IDF_COMPONENT_MANAGER}" STREQUAL "0")
+    message(FATAL_ERROR "This example downloads pinned third-party dependencies. Build with IDF_COMPONENT_MANAGER=1 idf.py build.")
+endif()
+if(NOT EXISTS "${CMAKE_CURRENT_LIST_DIR}/gagent-sdk/gagent-sdk.cmake")
+    message(FATAL_ERROR "GAgent SDK is missing. Obtain the complete example repository including examples/p4_iot_basic/gagent-sdk, or install the matching SDK with tools/install_sdk.py from the repository root.")
+endif()
 # 首个例程使用 P4；C61 无线芯片由 SDK 的 Hosted 组件管理。
 set(IDF_TARGET esp32p4)
 set(SDKCONFIG_DEFAULTS "${CMAKE_CURRENT_LIST_DIR}/gagent-sdk/sdkconfig.defaults;${CMAKE_CURRENT_LIST_DIR}/sdkconfig.defaults")

@@ -1,0 +1,78 @@
+{
+  "profile": {
+    "mode": "soc",
+    "beacon": false,
+    "mcu_ota": false,
+    "baud": 115200,
+    "heartbeat_ms": 55000,
+    "ack_timeout_ms": 600,
+    "storage_writable": true,
+    "module_ota": true
+  },
+  "name": "p4_sdk_camera",
+  "partition": "partitions.csv",
+  "board_group": "sdk",
+  "requires": [],
+  "target": "esp32p4",
+  "aispeech": {
+    "enabled": false
+  },
+  "flash_size": "16M",
+  "p4_hosted": {
+    "reset_active_high": true,
+    "power_pin": -1,
+    "power_active_high": true,
+    "power_delay_ms": 20,
+    "reserved_pins": [
+      2,
+      12,
+      52,
+      53,
+      54
+    ],
+    "chip": "esp32c61",
+    "transport": "sdio",
+    "reset_pin": 13,
+    "sdio": {
+      "cmd_pin": 19,
+      "clk_pin": 18,
+      "data_pins": [
+        14,
+        15,
+        16,
+        17
+      ],
+      "clock_khz": 40000,
+      "reset_delay_ms": 1500
+    }
+  },
+  "camera": {
+    "enabled": true,
+    "sensor": "sc2336",
+    "i2c_port": 0,
+    "scl_pin": 8,
+    "sda_pin": 7,
+    "i2c_hz": 100000,
+    "xclk_pin": -1,
+    "xclk_hz": 24000000,
+    "reset_pin": -1,
+    "pwdn_pin": -1,
+    "power_pin": 0,
+    "power_active_high": true,
+    "power_delay_ms": 100,
+    "width": 1024,
+    "height": 600,
+    "fps": 30,
+    "bitrate": 1000000,
+    "detection": "none",
+    "score_threshold": 50,
+    "detect_interval_ms": 1000,
+    "confirm_frames": 3,
+    "absent_ms": 3000,
+    "auto_stream": false,
+    "event_duration_ms": 0,
+    "cooldown_ms": 60000,
+    "backend_url": "http://101.126.88.194:8080",
+    "whip_url": ""
+  }
+}

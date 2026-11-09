@@ -6,12 +6,16 @@
 
 ## 构建与测试
 
-使用 SDK 清单指定提交的 ESP-IDF 6.1 和工具链。在本目录安装 SDK 为 `gagent-sdk/`，先加载 IDF 环境，再运行：
+使用 SDK 清单指定提交的 ESP-IDF 6.1 和工具链、CMake 3.24 或更新版本。匹配的 `gagent-sdk/` 已随仓库提供；先加载 IDF 环境，再在本目录运行：
 
 ```sh
-IDF_COMPONENT_MANAGER=0 idf.py build
+IDF_COMPONENT_MANAGER=1 idf.py build
 idf.py -p YOUR_SERIAL_PORT flash monitor
 ```
+
+首次构建需要联网，Component Manager 按 `main/idf_component.yml` 和 `dependencies.lock` 下载第三方组件到 `managed_components/`。其中 `esp-sr` 来自共用采集组件的音频回声消除依赖，不表示本例程启用了语音识别；语音模型不包含在 SDK 中。不要提交或修改下载目录，也不要使用 `IDF_COMPONENT_MANAGER=0` 构建本例程。
+
+在仓库根目录执行 `python3 tools/install_sdk.py --verify-only` 可校验 SDK；只有修复或升级 SDK 时才需要安装脚本的 `--archive` / `--sdk-dir` 参数。
 
 首次使用原 MCU 固件的设备，先备份原设备 Flash。若 GData 中已有其他产品身份或不同 PS，应用会拒绝启动；明确清理测试设备的 `GData_0`、`GData_1` 后重新启动。升级本示例无需反复清理；不要为了重新配网擦除设备身份。示例不自动修改 C61 从机固件。
 
@@ -62,4 +66,4 @@ python3 gagent-sdk/tools/generate_soc_board.py --pk 0000000000000000000000000000
 
 其余预编译库依赖的 SDK 配置保持清单一致。该包对应当前 C61 SDIO 接线；改变 Hosted 接线、芯片、BLE 协议或 ABI 配置需要重新导出匹配的 SDK。`board.json` 是这组硬件接线的声明，Flash 实际容量以 sdkconfig 为准。
 
-SDK 下的文件有哈希校验；请编辑复制出的工程，勿直接修改 `gagent-sdk/examples/`。正常构建只使用 SDK 的库、头文件和随包第三方依赖，不需要原仓库。
+SDK 下的文件有哈希校验；请编辑本工程的应用文件，勿直接修改 `gagent-sdk/`。正常构建使用 SDK 的库、头文件和 Component Manager 下载的锁定依赖，不需要内部固件仓库。

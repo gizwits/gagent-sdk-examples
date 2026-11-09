@@ -1,0 +1,63 @@
+# SDK third-party dependencies; exact producer versions.
+dependencies:
+  idf: ">=6.0"
+  espressif/cjson:
+    version: "==1.7.19"
+  espressif/cmake_utilities:
+    version: "==0.5.3"
+  espressif/dl_fft:
+    version: "==0.8.0"
+  espressif/esp-dl:
+    version: "==3.3.15"
+  espressif/esp-sr:
+    version: "==2.6.1"
+  espressif/esp_audio_codec:
+    version: "==2.5.0"
+  espressif/esp_audio_effects:
+    version: "==1.3.0~1"
+  espressif/esp_cam_sensor:
+    version: "==2.3.0"
+  espressif/esp_capture:
+    version: "==0.8.4"
+  espressif/esp_codec_dev:
+    version: "==1.5.11"
+  espressif/esp_h264:
+    version: "==1.3.0"
+  espressif/esp_hosted:
+    version: "==2.12.11"
+  espressif/esp_image_effects:
+    version: "==1.1.0"
+  espressif/esp_ipa:
+    version: "==2.2.0~1"
+  espressif/esp_libsrtp:
+    version: "==1.0.0"
+  espressif/esp_muxer:
+    version: "==1.2.4"
+  espressif/esp_new_jpeg:
+    version: "==1.0.2"
+  espressif/esp_sccb_intf:
+    version: "==1.0.0"
+  espressif/esp_video:
+    version: "==2.3.0"
+  espressif/esp_video_codec:
+    version: "==0.5.5"
+  espressif/esp_websocket_client:
+    version: "==1.4.0"
+  espressif/gmf_audio:
+    version: "==0.8.3"
+  espressif/gmf_core:
+    version: "==0.8.4"
+  espressif/gmf_fft:
+    version: "==1.0.0"
+  espressif/gmf_video:
+    version: "==0.8.8"
+  espressif/mdns:
+    version: "==1.12.0"
+  espressif/mqtt:
+    version: "==1.0.0"
+  espressif/nghttp:
+    version: "==1.65.0~1"
+  espressif/usb:
+    version: "==1.6.0"
+  espressif/usb_host_uvc:
+    version: "==2.5.2"
