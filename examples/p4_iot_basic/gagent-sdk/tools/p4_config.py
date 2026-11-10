@@ -11,7 +11,7 @@ def resolve_hosted(raw, target, application, voice):
     common = {'chip','transport','reset_pin','sdio','spi'} | set(defaults)
     if set(raw)-common: raise ValueError('Unknown p4_hosted setting')
     cfg = {**defaults, **raw}
-    if cfg.get('chip') not in ('esp32c6','esp32c61'): raise ValueError('Unsupported Hosted chip')
+    if cfg.get('chip') not in ('esp32c5','esp32c6','esp32c61'): raise ValueError('Unsupported Hosted chip')
     if cfg.get('transport') not in ('sdio','spi'): raise ValueError('Hosted transport must be sdio or spi')
     def integer(value, low, high, label):
         if type(value) is not int or not low <= value <= high: raise ValueError('Invalid Hosted '+label)
@@ -65,14 +65,22 @@ def generate_hosted(selected, output):
     for key in ('power_pin','power_active_high','power_delay_ms'):
         text+=f'#define GAGENT_HOSTED_{key.upper()} {int(cfg[key])}\n'
     path.write_text(text)
+    generate_power_binding(cfg, output)
+
+
+def generate_power_binding(cfg, output):
+    (output/'p4_defaults.c').write_text('#include "gagent_p4.h"\n'
+        'gagent_p4_power_config_t gagent_p4_board_power(void) {\n'
+        'return (gagent_p4_power_config_t){%d,%s,%d};\n}\n' %
+        (cfg['power_pin'],str(cfg['power_active_high']).lower(),cfg['power_delay_ms']))
 
 
 def sdk_values(selected):
     cfg=selected.get('p4_hosted')
     if not cfg:return {}
     chip=cfg['chip'].upper();bus=cfg['transport'];p=cfg[bus]
-    values={'CONFIG_SLAVE_IDF_TARGET_ESP32C6':'n','CONFIG_SLAVE_IDF_TARGET_ESP32C61':'n',
-            'CONFIG_ESP_HOSTED_CP_TARGET_ESP32C6':'n','CONFIG_ESP_HOSTED_CP_TARGET_ESP32C61':'n',
+    values={'CONFIG_SLAVE_IDF_TARGET_ESP32C5':'n','CONFIG_SLAVE_IDF_TARGET_ESP32C6':'n','CONFIG_SLAVE_IDF_TARGET_ESP32C61':'n',
+            'CONFIG_ESP_HOSTED_CP_TARGET_ESP32C5':'n','CONFIG_ESP_HOSTED_CP_TARGET_ESP32C6':'n','CONFIG_ESP_HOSTED_CP_TARGET_ESP32C61':'n',
             'CONFIG_ESP32P4_EYE_C6_BOARD':'n','CONFIG_ESP_HOSTED_P4_DEV_BOARD_NONE':'y',
             'CONFIG_ESP_HOSTED_SDIO_HOST_INTERFACE':'n','CONFIG_ESP_HOSTED_SPI_HOST_INTERFACE':'n'}
     values['CONFIG_SLAVE_IDF_TARGET_'+chip]='y';values['CONFIG_ESP_HOSTED_CP_TARGET_'+chip]='y'

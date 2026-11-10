@@ -19,6 +19,7 @@ public:
                std::string_view session,const LogCapture::Batch&,std::uint64_t now) noexcept;
     Result step(LogSocket&,std::uint64_t now) noexcept;
     std::uint64_t retry_ms() const noexcept {return retry_ms_;}
+    unsigned http_status() const noexcept {return parser_.status_code;}
 private:
     enum class Phase {connect,headers,body,response};
     Phase phase_=Phase::connect;

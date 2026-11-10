@@ -2,12 +2,20 @@
 #include "gagent/cloud/cloud.hpp"
 #include "gagent/ota/download.hpp"
 #include <atomic>
+#include <cstdlib>
+#include <memory>
+#include <type_traits>
 namespace gagent::platform {
 // One bounded I/O job. Cloud HTTP and board-owned peripheral OTA share an
 // exclusive temporary task slot; no concurrent HTTP client task is admitted.
 // This object must outlive busy()==false, including after cancel (DNS/socket calls may still be returning).
 class EspHttp final : public cloud::Http,public cloud::Download {
 public:
+    // malloc-compatible hooks allow deterministic workspace allocation failures.
+    using Allocate=void*(*)(std::size_t);
+    using Release=void(*)(void*);
+    explicit EspHttp(Allocate allocate=std::malloc,Release release=std::free) noexcept
+        : allocate_(allocate),workspace_(nullptr,release) {}
     // Run a peripheral OTA on the same exclusive I/O task slot as cloud HTTP.
     // Called only by the runtime owner; callback/context must outlive the job.
     using OtaJob = void (*)(void*, bool (*)(void*), void*) noexcept;
@@ -42,10 +50,17 @@ private:
     static void entry(void*) noexcept;
     void perform() noexcept;
     cloud::Address address_{};
-    cloud::Request request_{};
+    struct RequestWorkspace {
+        cloud::Request request{};
+        // Scheme, host, :port, path and terminator at their maximum capacities.
+        std::array<char,8+254+6+512> url{};
+    };
+    static_assert(std::is_trivially_destructible_v<RequestWorkspace>);
+    Allocate allocate_;
+    // Worker creates before launch; producer frees after HTTP cleanup and before
+    // publishing completion. Response storage separately owns returned views.
+    std::unique_ptr<RequestWorkspace,Release> workspace_;
     cloud::HttpResponse response_{};
-    // Scheme, host, :port, path and terminator at their maximum capacities.
-    std::array<char,8+254+6+512> url_{};
     // Streaming reuses response_.body/size; ordinary poll is isolated until the stream completes.
     std::uint32_t download_size_=0,image_capacity_=0;
     cloud::DownloadKind pending_kind_=cloud::DownloadKind::data;

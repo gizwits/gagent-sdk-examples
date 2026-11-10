@@ -21,6 +21,8 @@
 #endif
 namespace gagent::platform {
 struct ApplicationConfig {
+    // Board pins come from customer board.json; -2 uses its generated power defaults.
+    struct HostedPower { int pin=-2; bool active_high=true; std::uint32_t delay_ms=20; } hosted_power;
     runtime::ApplicationConfig application{};
     std::optional<runtime::StartupDefaults> soc_product;
     device::BoardControl control=nullptr;

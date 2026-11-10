@@ -10,6 +10,8 @@ GAGENT_FIELD("opc", 32, identity)
 GAGENT_FIELD("ak", 32, identity)
 GAGENT_FIELD("tzs", 19, preference)
 GAGENT_FIELD("lid", 7, preference)
+// C0 full report interval, seconds; absent means 600. Legacy key retained.
+GAGENT_FIELD("c0RT", 10, preference)
 GAGENT_FIELD("ws1", 191, wifi)
 GAGENT_FIELD("bsd1", 191, wifi)
 GAGENT_FIELD("wk1", 191, wifi)
@@ -93,8 +95,8 @@ GAGENT_FIELD("aRst", 1, identity)
 GAGENT_FIELD("aRnd", 32, identity)
 
 // Persistent per-target OTA candidate fingerprint/count. Preserved across resets.
-GAGENT_FIELD("otaW", 35, state)
-GAGENT_FIELD("otaM", 35, state)
+GAGENT_FIELD("otaW", 44, state)
+GAGENT_FIELD("otaM", 44, state)
 
 // Last verified MCU UART rate: version:configured-default:negotiated-rate.
 GAGENT_FIELD("mcuBaud", 32, state)

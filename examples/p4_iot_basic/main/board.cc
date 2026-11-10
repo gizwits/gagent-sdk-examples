@@ -7,6 +7,7 @@
 #include "sdkconfig.h"
 #ifdef GAGENT_CAMERA_ENABLED
 #include "gagent/camera/service.hpp"
+#include "gagent/camera/config.h"
 #endif
 namespace gagent::board {
 // 装配产品身份、云服务和数据点回调。通常只需修改 product_config.hpp 和业务回调。
@@ -50,6 +51,16 @@ void start(runtime::Boot& boot) noexcept {
     }();
     static platform::EspApplication application(boot, selected, config);
     product::attach(application.application(), boot);
+#ifdef GAGENT_CAMERA_ENABLED
+    // 可选启动自检：检测传感器并验证原生模式，不开始网络推流。
+    // 更改运行参数时，在此调用前使用 gagent_camera_configure()。
+    gagent_camera_probe_result_t camera_info{};
+    const int camera_error = gagent_camera_probe(&camera_info);
+    ESP_LOGI("sdk_basic", "Camera probe=%d native=%lux%lu@%lu output=%lux%lu@%lu", camera_error,
+        (unsigned long)camera_info.capture.width, (unsigned long)camera_info.capture.height,
+        (unsigned long)camera_info.capture.fps_num, (unsigned long)camera_info.output.width,
+        (unsigned long)camera_info.output.height, (unsigned long)camera_info.output.fps_num);
+#endif
     const auto result = application.start();
     ESP_LOGI("gagent", "SoC application start=%d", static_cast<int>(result));
 }

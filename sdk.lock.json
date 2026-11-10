@@ -7,6 +7,6 @@
   "camera": true,
   "idf_revision": "2f8327156dd1f3c010413a6d47c9f86a607be498",
   "compiler_version": "15.2.0",
-  "producer_version": "f06e5b401070",
-  "manifest_sha256": "3049d71a699bebc0603b4cabcc979633a40e6191c25db0c4b1855a01fdb14551"
+  "producer_version": "a950614594e2",
+  "manifest_sha256": "488b91ef1cc82bc4c1895f90c3fff76aba4606fb061e35e0913c723be7672cec"
 }

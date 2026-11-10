@@ -1,5 +1,6 @@
 #pragma once
 #include "gagent/cloud/transport_limits.hpp"
+#include "gagent/cloud/channel_telemetry.hpp"
 #include "gagent/cloud/mqtt_buffer.hpp"
 #include "gagent/cloud/mqtt_payload.hpp"
 #include <cstring>
@@ -117,6 +118,11 @@ public:
     virtual std::uint16_t online_clients() const noexcept {return 0;}
     // Some providers acknowledge reports themselves, independently of App presence.
     virtual bool reports_acknowledged_by_cloud() const noexcept {return false;}
+    virtual c0::Policy channel_policy() const noexcept {return {};}
+    // unsupported means ordinary business traffic; malformed C0 must never reach MCU.
+    virtual protocol::Status channel_request(const protocol::Frame&,c0::Request&) const noexcept {return protocol::Status::unsupported;}
+    virtual bool encode_channel(const Configuration&,const c0::Sample&,const c0::Request&,Publish&) noexcept {return false;}
+    virtual void channel_accepted() noexcept {}
     virtual void connected(std::uint64_t) noexcept {}
     virtual void metadata(const Metadata&) noexcept {}
     virtual void tick(Driver&,const Configuration&,std::uint64_t) noexcept {}
@@ -133,6 +139,7 @@ public:
     virtual ~Management()=default;
     virtual protocol::Status receive(const protocol::Frame&,std::uint64_t now) noexcept=0;
     virtual protocol::Status update(const Update&,std::uint64_t) noexcept {return protocol::Status::unsupported;}
+    virtual protocol::Status channel_telemetry(const c0::Request&,std::uint64_t) noexcept {return protocol::Status::unsupported;}
     virtual protocol::Status runtime_log(bool,std::string_view,std::uint64_t) noexcept {return protocol::Status::unsupported;}
 };
 enum class State { offline, connecting, ready, backoff, authentication_failed, invalid_configuration, exhausted };
@@ -154,6 +161,9 @@ public:
     }
     std::uint16_t remote_clients() const noexcept {return remote_clients_;}
     State state() const noexcept {return state_;}
+    c0::Policy channel_policy() const noexcept {return protocol_.channel_policy();}
+    bool report_channel(const c0::Sample&,const c0::Request& request={}) noexcept;
+    std::uint32_t connection_epoch() const noexcept {return epoch_;}
     std::size_t reply_cache_bytes() const noexcept {
         std::size_t total=0;for(const auto& peer:peers_)total+=peer.response.size();return total;
     }

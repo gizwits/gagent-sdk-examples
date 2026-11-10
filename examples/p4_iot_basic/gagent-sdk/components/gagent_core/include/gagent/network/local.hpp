@@ -35,6 +35,8 @@ public:
 // All entry points are called by the runtime owner. Per-session receive/send buffers are owned.
 class Server : public device::Route, private protocol::Consumer {
 public:
+    using Allocate=void* (*)(std::size_t);
+    using Release=void (*)(void*);
     Server(const Server&)=delete;
     Server& operator=(const Server&)=delete;
     bool configure(const storage::Snapshot&,const Discovery&) noexcept;
@@ -84,9 +86,15 @@ protected:
     void v5_workspace(V5Workspace& value) noexcept {v5_workspace_=&value;}
 #endif
     struct Session {
-        std::array<std::uint8_t,frame_limit> rx{};
-        std::array<std::uint8_t,send_limit> tx{};
-        protocol::Stream stream{rx.data(),rx.size()};
+        std::uint8_t* rx=nullptr;
+        // Storage belongs to the concrete transport, which chooses its queue size.
+        struct SendBuffer {
+            std::uint8_t* bytes=nullptr;
+            std::size_t capacity=0;
+            std::uint8_t* data() noexcept {return bytes;}
+            std::size_t size() const noexcept {return capacity;}
+        } tx;
+        protocol::Stream stream{nullptr,0};
         std::size_t head=0,tail=0;
         std::uint32_t id=0;
         std::uint64_t activity=0,progress=0;
@@ -109,8 +117,29 @@ protected:
     Server(protocol::Channel channel,Transport& io,device::Endpoint& endpoint,Encrypt encrypt,
            Session* sessions,std::size_t count,bool skip_login=false) noexcept
         : channel_(channel),skip_login_(channel==protocol::Channel::ble && skip_login),io_(io),endpoint_(endpoint),clients_{sessions,count},encrypt_(encrypt) {}
-    void session_storage(Session* sessions,std::size_t count) noexcept {clients_={sessions,count};}
+    void session_storage(Session* sessions,std::size_t count,std::uint8_t* input,std::uint8_t* output,std::size_t capacity,
+                         Allocate allocate=nullptr,Release release=nullptr) noexcept {
+        clients_={sessions,count};
+        allocate_=allocate;release_=release;
+        for(std::size_t i=0;i<count;++i){
+            auto& session=sessions[i];
+            session.rx=input?input+i*frame_limit:nullptr;
+            session.stream=protocol::Stream(session.rx,input?frame_limit:0);
+            session.tx={output?output+i*capacity:nullptr,capacity};
+        }
+    }
+    // Called by the concrete owner before its Session members are destroyed.
+    void release_session_storage() noexcept;
 private:
+    void release_idle_buffers() noexcept;
+    struct BufferUse {
+        Server& owner;
+        explicit BufferUse(Server& value) noexcept : owner(value) {++owner.buffer_users_;}
+        ~BufferUse(){if(--owner.buffer_users_==0)owner.release_idle_buffers();}
+    };
+    Allocate allocate_=nullptr;
+    Release release_=nullptr;
+    unsigned buffer_users_=0;
 #if GAGENT_BLE_PROTOCOL_VERSION == 5
     bool v5_load(const storage::Snapshot&,const Discovery&) noexcept;
     protocol::Status v5_receive(Session&,protocol::Bytes) noexcept;

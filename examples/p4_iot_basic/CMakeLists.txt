@@ -5,7 +5,7 @@ endif()
 if(NOT EXISTS "${CMAKE_CURRENT_LIST_DIR}/gagent-sdk/gagent-sdk.cmake")
     message(FATAL_ERROR "GAgent SDK is missing. Obtain the complete example repository including examples/p4_iot_basic/gagent-sdk, or install the matching SDK with tools/install_sdk.py from the repository root.")
 endif()
-# 首个例程使用 P4；C61 无线芯片由 SDK 的 Hosted 组件管理。
+# 主芯片始终为 P4；SDK 按 board.json 的 p4_hosted.chip 选择 C5/C6/C61 无线库。
 set(IDF_TARGET esp32p4)
 set(SDKCONFIG_DEFAULTS "${CMAKE_CURRENT_LIST_DIR}/gagent-sdk/sdkconfig.defaults;${CMAKE_CURRENT_LIST_DIR}/sdkconfig.defaults")
 # 导入静态库、锁定依赖及兼容性检查，不需要内部固件仓库源码。

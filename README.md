@@ -51,9 +51,20 @@ RGB 灯为 GPIO51 的 WS2812，GRB 顺序。App 的 `start_stream` 与按键共�
 
 例程源码、中文文档、数据点快照和精简 SDK 均进入 Git。`sdk.lock.json` 校验 SDK 文件；`main/idf_component.yml` 声明第三方组件的精确版本，`dependencies.lock` 固定组件内容。构建通过 ESP-IDF Component Manager 下载依赖到 `managed_components/`，该目录与构建产物一同被忽略。
 
-SDK 约 26 MiB，只注册 6 个 GAgent 组件。定制的 WebRTC 接入代码以摄像头组件内部的配套静态库提供，不展开独立源码组件。mDNS、`esp-sr`、`esp-dl`、Hosted、音视频编解码等 Registry 组件不再随 SDK 提交。第三方组件下载后仍会占用本地磁盘；后续构建可复用下载结果。不要关闭 Component Manager，也不要手改 `managed_components/`。
+SDK 注册 7 个 GAgent 组件，核心、云协议和相机库共用，另按 C5/C6/C61 选择无线适配静态库。定制的 WebRTC 接入代码以摄像头组件内部的配套静态库提供，不展开独立源码组件。mDNS、`esp-sr`、`esp-dl`、Hosted、音视频编解码等 Registry 组件不再随 SDK 提交。第三方组件下载后仍会占用本地磁盘；后续构建可复用下载结果。不要关闭 Component Manager，也不要手改 `managed_components/`。
 
 - [上板验收](docs/上板验收.md)
 - [例程维护与 SDK 升级](docs/维护说明.md)
 
 无需摄像头的项目可由 SDK 提供方提供基础包及对应模板；本例程的锁定文件指向摄像头包，不能直接混用两种包。
+
+
+## P4 无线芯片选择
+
+当前 SDK 同时提供 C5、C6、C61 的 P4 无线适配 `.a`。例程默认仍为 C61。更换无线从机时，在 `examples/p4_iot_basic/board.json` 修改 `p4_hosted.chip`，并填写实际 SDIO 接线、复位及供电参数；无需手工替换单个 `.a`。
+
+导入脚本在 ESP-IDF 配置前选择对应库。更换型号须使用新的构建目录，并移走旧的工作 `sdkconfig`；库缺失或工作配置与型号不一致会直接报错。C5/C6 的编译和链接通过，不代表已经在对应实物板卡上验收。
+
+所有无线库都运行在 P4 上；C5/C6/C61 本身须安装与主机匹配的 ESP-Hosted 固件。独立供电 GPIO 还需在 `main/board.cc` 的 ApplicationConfig 中设置 `hosted_power`，详见 [SDK 适配说明](examples/p4_iot_basic/gagent-sdk/README.md#p4-v3-无线二进制变体)。
+
+摄像头型号、通讯引脚、分辨率、帧率和动态码率配置，见可离线打开的 [P4 摄像头 SDK 配置手册](docs/sdk-p4-camera.html)。初始化参数由 `board.json` 生成；SDK 不再固定摄像头接线及输出参数。

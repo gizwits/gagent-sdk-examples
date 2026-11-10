@@ -1,0 +1,5 @@
+idf_component_register(INCLUDE_DIRS "include" REQUIRES app_update bootloader_support bt esp-tls esp_driver_gpio esp_driver_uart esp_event esp_http_client esp_hw_support esp_netif esp_partition esp_timer esp_wifi espcoredump espressif__mdns espressif__mqtt freertos gagent_core gagent_esp gagent_p4 lwip mbedtls nvs_flash tcp_transport)
+add_prebuilt_library(gagent_binary_gagent_wireless "${GAGENT_SDK_DIR}/radio/${GAGENT_SDK_RADIO}/libgagent_wireless.a" REQUIRES app_update bootloader_support bt esp-tls esp_driver_gpio esp_driver_uart esp_event esp_http_client esp_hw_support esp_netif esp_partition esp_timer esp_wifi espcoredump espressif__mdns espressif__mqtt freertos gagent_core gagent_esp gagent_p4 lwip mbedtls nvs_flash tcp_transport)
+target_link_libraries(${COMPONENT_LIB} INTERFACE gagent_binary_gagent_wireless)
+target_compile_features(${COMPONENT_LIB} INTERFACE cxx_std_17)
+target_compile_options(${COMPONENT_LIB} INTERFACE "$<$<COMPILE_LANGUAGE:CXX>:-fno-exceptions;-fno-rtti>")

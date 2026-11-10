@@ -22,7 +22,9 @@ public:
     void cancel() noexcept override {cancelled_.store(true);ready_.store(false);}
     bool busy() const noexcept override {return busy_.load();}
     bool idle() const noexcept override {return !busy_.load() && !borrowed_ && !reserved_;}
-    struct BufferUsage {unsigned rx_bytes=0,tx_bytes=0,rx_peak=0,tx_peak=0,rx_waits=0,rx_overflows=0,tx_full=0,rx_oom=0,tx_oom=0;};
+    // Approximate concurrent snapshots: used includes assembling/borrowed slots;
+    // byte capacities remain allocated even when the corresponding slot is idle.
+    struct BufferUsage {unsigned rx_bytes=0,tx_bytes=0,rx_used=0,tx_used=0,rx_peak=0,tx_peak=0,rx_waits=0,rx_overflows=0,tx_full=0,rx_oom=0,tx_oom=0;};
     BufferUsage buffer_usage() const noexcept;
     mqtt::ConnectionState connection_state() const noexcept override {
         if(cancelled_.load() || failure_.load() || !busy_.load())return mqtt::ConnectionState::failed;
@@ -44,6 +46,7 @@ private:
     void run() noexcept;
     void log_stack(bool force=false) noexcept;
     void log_buffers(bool force=false) noexcept;
+    void log_state(const char* phase) const noexcept;
     mqtt::BufferToken acquire_rx(std::size_t capacity) noexcept;
     // Each task samples its own live stack; never query an SDK handle after teardown.
     struct StackUsage {std::uint32_t tick=0;unsigned reported=UINT32_MAX;};

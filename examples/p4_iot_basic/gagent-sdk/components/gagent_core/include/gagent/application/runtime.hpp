@@ -7,8 +7,12 @@ namespace gagent::runtime {
 // Full-frame assemblers retain the original protocol limits.
 #ifdef GAGENT_C2_MEMORY_PROFILE
 inline constexpr std::size_t event_bytes=(!build::lan && !build::softap)?256:1024;
+// One LAN client + one UDP datagram + one UART chunk per EspIo poll.
+// BLE drains its handoff immediately on the same worker.
+inline constexpr std::size_t event_queue_limit=3;
 #else
 inline constexpr std::size_t event_bytes=(!build::lan && !build::softap)?512:1024;
+inline constexpr std::size_t event_queue_limit=8;
 #endif
 enum class EventKind { tcp, udp, serial, disconnected, network_down, bluetooth, bluetooth_disconnected };
 struct Event {
@@ -64,7 +68,7 @@ private:
     lan::Server& lan_;
     device::Endpoint& endpoint_;
     device::Router router_;
-    std::array<Event,8> events_{};
+    std::array<Event,event_queue_limit> events_{};
     std::size_t head_=0,count_=0;
     std::uint64_t now_=0;
     BootState prepare_storage(bool allow_migration) noexcept;

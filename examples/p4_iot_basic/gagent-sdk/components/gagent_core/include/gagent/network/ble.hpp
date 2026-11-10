@@ -4,6 +4,11 @@
 namespace gagent::runtime {class Engine;}
 namespace gagent::ble {
 inline constexpr std::size_t client_limit=1;
+#ifdef GAGENT_C2_MEMORY_PROFILE
+inline constexpr std::size_t send_limit=local::frame_limit;
+#else
+inline constexpr std::size_t send_limit=local::send_limit;
+#endif
 using Transport=local::Transport;
 using Discovery=local::Discovery;
 using Encrypt=local::Encrypt;
@@ -41,6 +46,8 @@ public:
     Server(Transport&,device::Endpoint&,Encrypt=nullptr,Policy={}) noexcept;
 private:
     Session sessions_[client_limit]{};
+    std::array<std::uint8_t,client_limit*local::frame_limit> input_{};
+    std::array<std::uint8_t,client_limit*send_limit> output_{};
 #if GAGENT_BLE_PROTOCOL_VERSION == 5
     V5Workspace workspace_{};
 #endif

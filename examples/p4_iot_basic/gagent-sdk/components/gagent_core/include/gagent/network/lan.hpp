@@ -1,15 +1,22 @@
 #pragma once
 #include "gagent/network/local.hpp"
 #include "gagent/build_features.hpp"
+#include <cstdlib>
 namespace gagent::lan {
 using Peer=local::Peer;
 using Discovery=local::Discovery;
 using Encrypt=local::Encrypt;
 using Transport=local::Transport;
+#ifdef GAGENT_C2_MEMORY_PROFILE
+inline constexpr std::size_t client_limit=(build::lan || build::softap)?1:0;
+inline constexpr auto send_limit=local::frame_limit;
+#else
 inline constexpr std::size_t client_limit=(build::lan || build::softap)?local::client_limit:0;
-inline constexpr auto frame_limit=local::frame_limit,send_limit=local::send_limit;
+inline constexpr auto send_limit=local::send_limit;
+#endif
+inline constexpr auto frame_limit=local::frame_limit;
 // LAN selects its channel; all local authentication/protocol/session business is shared with BLE.
-#if defined(GAGENT_COMPACT_2M) && defined(GAGENT_BLE_ONLY_PROVISIONING)
+#if defined(GAGENT_COMPACT_2M) && defined(GAGENT_BLE_ONLY_PROVISIONING) && !defined(GAGENT_COMPACT_LAN)
 // No local network transport exists in this build. Keep the runtime lifecycle
 // interface without instantiating local::Server's 4.9 KiB protocol workspace.
 class Server final : public device::Route {
@@ -44,9 +51,18 @@ private:
 #else
 class Server final : public local::Server {
 public:
+#ifdef GAGENT_C2_MEMORY_PROFILE
+    Server(Transport&,device::Endpoint&,Encrypt=nullptr,Allocate=std::malloc,Release=std::free) noexcept;
+    ~Server() override {release_session_storage();}
+#else
     Server(Transport&,device::Endpoint&,Encrypt=nullptr) noexcept;
+#endif
 private:
     std::array<Session,client_limit> sessions_{};
+#ifndef GAGENT_C2_MEMORY_PROFILE
+    std::array<std::uint8_t,client_limit*frame_limit> input_{};
+    std::array<std::uint8_t,client_limit*send_limit> output_{};
+#endif
 };
 #endif
 }

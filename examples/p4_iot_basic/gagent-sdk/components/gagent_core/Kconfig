@@ -1,3 +1,15 @@
+menu "GAgent networking"
+
+config GAGENT_COMPACT_LAN
+    bool "Enable station LAN discovery and control in a 2MB build"
+    default n
+    help
+        Retain the existing authenticated TCP control and UDP discovery service.
+        ESP32-C2 allows one LAN client with one complete frame of send buffering.
+        SoftAP, SmartConfig and mDNS remain controlled by their own policies.
+
+endmenu
+
 menu "GAgent diagnostics"
 
 config GAGENT_TRANSPORT_DIAGNOSTICS

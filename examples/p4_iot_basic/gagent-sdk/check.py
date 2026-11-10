@@ -6,6 +6,9 @@ import json
 from pathlib import Path
 import re
 import subprocess
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from radio import select as select_radio, board_values
 
 
 def check_partitions(partition, idf, config, manifest, app_bin=None):
@@ -60,23 +63,33 @@ def values(path):
     return result
 
 
-def check(sdk, config, idf, compiler, target, app_bin=None, board=None):
+def check(sdk, config, idf, compiler, target, app_bin=None, board=None, radio=None):
     manifest = json.loads((sdk / "sdk-manifest.json").read_text())
     for name, digest in manifest["files_sha256"].items():
         if hashlib.sha256((sdk / name).read_bytes()).hexdigest() != digest:
             raise ValueError("SDK file changed: " + name)
     if target != manifest["target"]:
         raise ValueError("SDK target mismatch")
+    selected = json.loads(Path(board).read_text()) if board else None
+    actual = values(config) if manifest.get("radio_variants") else None
+    variant = None
+    if manifest.get("radio_variants"):
+        from radio import CHIPS
+        detected = [chip for chip in CHIPS if actual.get("CONFIG_SLAVE_IDF_TARGET_" + chip.upper()) == "y"]
+        if len(detected) != 1:
+            raise ValueError("SDK requires exactly one Wi-Fi Remote slave target")
+        if radio and radio != detected[0]:
+            raise ValueError("SDK radio/config mismatch; use a fresh build and sdkconfig for the selected radio")
+        _, variant = select_radio(manifest, detected[0], selected)
     if board:
-        selected = json.loads(Path(board).read_text())
         if selected.get("target") != target or selected.get("mode") != manifest["board"]["profile"]["mode"]:
             raise ValueError("SDK consumer board mode/target mismatch")
-        if selected.get("p4_hosted") != manifest["board"].get("p4_hosted"):
+        if variant is None and selected.get("p4_hosted") != manifest["board"].get("p4_hosted"):
             raise ValueError("SDK Hosted wiring mismatch; use libraries built for this wiring")
         camera = manifest["board"].get("camera", {"enabled": False})
         if bool(selected.get("camera", {}).get("enabled")) != bool(camera.get("enabled")):
             raise ValueError("Camera capability differs from the SDK libraries")
-        if camera.get("enabled") and selected.get("camera") != camera:
+        if not manifest.get("camera_config_abi") and camera.get("enabled") and selected.get("camera") != camera:
             raise ValueError("Camera configuration differs from the prebuilt SDK")
     revision = subprocess.check_output(["git", "-C", str(idf), "rev-parse", "HEAD"], text=True).strip()
     if revision != manifest["idf_revision"]:
@@ -84,7 +97,14 @@ def check(sdk, config, idf, compiler, target, app_bin=None, board=None):
     version = subprocess.check_output([compiler, "-dumpfullversion"], text=True).strip()
     if version != manifest["compiler_version"]:
         raise ValueError("SDK compiler version mismatch")
-    expected, actual = values(sdk / "sdkconfig.defaults"), values(config)
+    expected, actual = values(sdk / (variant["sdkconfig"] if variant else "sdkconfig.defaults")), values(config)
+    if variant:
+        expected.update(board_values(sdk, variant, selected))
+    if manifest.get("camera_config_abi"):
+        from camera import camera_config,sensor_values,sensor_key
+        camera_values=sensor_values(sdk,camera_config(sdk,manifest,selected))
+        expected={k:v for k,v in expected.items() if not sensor_key(k)}
+        expected.update(camera_values)
     # File location is relocatable; compare partition contents instead.
     paths = {"CONFIG_PARTITION_TABLE_FILENAME", "CONFIG_PARTITION_TABLE_CUSTOM_FILENAME"}
     if manifest.get("format_version", 1) >= 2:
@@ -116,5 +136,6 @@ if __name__ == "__main__":
     parser.add_argument("--target", required=True)
     parser.add_argument("--app-bin", type=Path)
     parser.add_argument("--board", type=Path)
+    parser.add_argument("--radio")
     args = parser.parse_args()
-    check(args.sdk, args.sdkconfig, args.idf, args.compiler, args.target, args.app_bin, args.board)
+    check(args.sdk, args.sdkconfig, args.idf, args.compiler, args.target, args.app_bin, args.board, args.radio)

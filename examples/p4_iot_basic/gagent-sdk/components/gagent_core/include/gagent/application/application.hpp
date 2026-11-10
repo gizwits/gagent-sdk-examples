@@ -1,6 +1,7 @@
 #pragma once
 #include "gagent/build_features.hpp"
 #include "gagent/cloud/provider.hpp"
+#include "gagent/cloud/c0.hpp"
 #include "gagent/application/preparation.hpp"
 #include "gagent/network/mdns.hpp"
 #include "gagent/application/mcu_product.hpp"
@@ -173,6 +174,7 @@ private:
     ota::BleInstall ble_install_state(ota::Target) const noexcept override;
     void ble_cancel_install(ota::Target) noexcept override;
     protocol::Status receive(const protocol::Frame&,std::uint64_t now) noexcept override;
+    protocol::Status channel_telemetry(const c0::Request& request,std::uint64_t now) noexcept override {return c0_.receive(request,now);}
     protocol::Status update(const mqtt::Update&,std::uint64_t) noexcept override;
     bool product(protocol::Bytes,std::uint64_t) noexcept override;
     bool refresh_product_tick(std::uint64_t) noexcept;
@@ -288,7 +290,7 @@ private:
     Boot& boot_;ApplicationPorts ports_;ApplicationConfig config_;VoiceReports voice_;ProductOptions product_{};
     lan::Server lan_;ble::Server ble_;ota::BleOta ble_ota_;Engine engine_;
     onboarding::Service onboarding_;binding::Service binding_;lan::Announcements announcements_;
-    cloud::Service cloud_;mqtt::Service mqtt_;Connectivity connectivity_;
+    cloud::Service cloud_;mqtt::Service mqtt_;c0::Service c0_;Connectivity connectivity_;
     reports::Service reports_;std::optional<management::Service> management_;
     Bluetooth bluetooth_;Status status_;SoftAp softap_;
     airlink::Confirmation confirmation_;WirelessOnboarding wireless_;

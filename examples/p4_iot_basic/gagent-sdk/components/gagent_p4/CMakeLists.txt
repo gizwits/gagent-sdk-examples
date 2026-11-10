@@ -1,5 +1,5 @@
-idf_component_register(INCLUDE_DIRS "include" REQUIRES esp_driver_gpio espressif__esp_hosted freertos)
-add_prebuilt_library(gagent_binary_gagent_p4 "${CMAKE_CURRENT_LIST_DIR}/libgagent_p4.a" REQUIRES esp_driver_gpio espressif__esp_hosted freertos)
+idf_component_register(INCLUDE_DIRS "include" REQUIRES esp_driver_gpio espressif__esp_hosted freertos gagent_board_binding)
+add_prebuilt_library(gagent_binary_gagent_p4 "${GAGENT_SDK_DIR}/radio/${GAGENT_SDK_RADIO}/libgagent_p4.a" REQUIRES esp_driver_gpio espressif__esp_hosted freertos gagent_board_binding)
 target_link_libraries(${COMPONENT_LIB} INTERFACE gagent_binary_gagent_p4)
 target_compile_features(${COMPONENT_LIB} INTERFACE cxx_std_17)
 target_compile_options(${COMPONENT_LIB} INTERFACE "$<$<COMPILE_LANGUAGE:CXX>:-fno-exceptions;-fno-rtti>")
