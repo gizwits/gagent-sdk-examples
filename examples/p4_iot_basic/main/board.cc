@@ -49,7 +49,7 @@ void start(runtime::Boot& boot) noexcept {
         return value;
     }();
     static platform::EspApplication application(boot, selected, config);
-    product::attach(application.application());
+    product::attach(application.application(), boot);
     const auto result = application.start();
     ESP_LOGI("gagent", "SoC application start=%d", static_cast<int>(result));
 }

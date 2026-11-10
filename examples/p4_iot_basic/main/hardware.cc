@@ -3,6 +3,7 @@
 #include "driver/rmt_tx.h"
 #include "driver/rmt_encoder.h"
 #include "esp_log.h"
+#include "esp_system.h"
 #include <array>
 namespace gagent::board::hardware {
 namespace {
@@ -39,10 +40,11 @@ bool initialize() noexcept {
         return false;
     }
     initialized=true;
-    ESP_LOGI("p4-example","BOOT=GPIO35 active-low; WS2812=GPIO51; press: toggle streaming");
+    ESP_LOGI("p4-example","BOOT=GPIO35 active-low; WS2812=GPIO51; short press: toggle streaming; hold 5s: reset Wi-Fi");
     return true;
 }
 bool pressed() noexcept {return initialized && gpio_get_level(button_pin)==0;}
+void restart() noexcept {esp_restart();}
 bool show(ui::Color color) noexcept {
     if(!initialized)return false;
     if(in_flight){

@@ -1,10 +1,10 @@
 #pragma once
 #include "gizwits_protocol.hpp"
 #include "gagent/protocol/reports.hpp"
-namespace gagent::runtime { class Application; }
+namespace gagent::runtime { class Application; class Boot; }
 namespace gagent::board::product {
 // 启动阶段调用，绑定生命周期覆盖整个应用的 SDK 对象。
-void attach(runtime::Application&) noexcept;
+void attach(runtime::Application&, runtime::Boot&) noexcept;
 // 可从普通业务任务调用：仅设置原子标志，实际配网操作由 Worker 完成。
 // 中断中应先投递按键事件，不要直接操作 SDK 服务。
 void request_pairing() noexcept;

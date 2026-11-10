@@ -11,6 +11,7 @@
 namespace gagent::board::product {
 namespace {
 runtime::Application* application = nullptr;
+runtime::Boot* boot = nullptr;
 // 跨任务只传递重新配网意图，不跨任务调用 Application。
 std::atomic<bool> pairing_requested{false};
 bool online = false;
@@ -27,11 +28,25 @@ bool request_stream(bool start) noexcept {
     return !start;
 #endif
 }
+// 与业务采样同属 Worker。只清除 Wi-Fi，保留设备身份和绑定信息。
+void reset_wifi() noexcept {
+    if (!boot || !application || application->quiescing()) return;
+    const auto saved=boot->reset(config::Reset::wifi);
+    if ((saved.status==storage::Status::ok || saved.status==storage::Status::unchanged) &&
+        saved.applied==storage::Applied::yes && saved.redundant) {
+        ESP_LOGI("sdk_basic", "BOOT held 5s: Wi-Fi configuration cleared; restarting for BLE pairing");
+        hardware::show({16,0,0});
+        hardware::restart();
+    } else {
+        ESP_LOGW("sdk_basic", "Wi-Fi reset failed; not restarting (status=%d applied=%d redundant=%d)",
+                 int(saved.status),int(saved.applied),int(saved.redundant));
+    }
+}
 datapoints::DataPoints current{}, last_reported{};
 bool first_report = true, pending = false;
 std::uint64_t last_attempt = 0, last_full = 0;
 }
-void attach(runtime::Application& value) noexcept { application = &value; }
+void attach(runtime::Application& value, runtime::Boot& owner) noexcept { application=&value; boot=&owner; }
 void request_pairing() noexcept { pairing_requested.store(true); }
 void initialize() noexcept {
     current = {};
@@ -63,9 +78,13 @@ void sample(datapoints::DataPoints& candidate, std::uint64_t now) noexcept {
             const auto result = application->onboarding().request_mode(onboarding::Mode::ble, now);
             ESP_LOGI("sdk_basic", "BLE pairing request=%d", int(result));
         }
-        if (hardware_ready && button.update(hardware::pressed(), now)) {
-            const bool start=!candidate.value_start_stream;
-            if (request_stream(start)) candidate.value_start_stream=start;
+        if (hardware_ready) {
+            const auto event=button.update(hardware::pressed(), now);
+            if (event==ui::ButtonEvent::long_press) reset_wifi();
+            else if (event==ui::ButtonEvent::short_press) {
+                const bool start=!candidate.value_start_stream;
+                if (request_stream(start)) candidate.value_start_stream=start;
+            }
         }
         bool streaming=false;
 #ifdef GAGENT_CAMERA_ENABLED

@@ -1,9 +1,11 @@
 #include "gizwits_product.hpp"
 #include "hardware.hpp"
+#include <cstdlib>
 namespace gagent::board::hardware {
 bool initialize() noexcept { return false; }
 bool pressed() noexcept { return false; }
 bool show(ui::Color) noexcept { return false; }
+void restart() noexcept { std::abort(); }
 }
 #include "gagent/protocol/device.hpp"
 #include <cstdio>

@@ -8,6 +8,7 @@ using namespace gagent::board;
 FakeChannel channel;FakeEncoder encoder;
 int failure=0,level=1,configs=0,channels=0,deleted_channels=0,deleted_encoders=0,transmits=0;
 bool busy=false;
+void esp_restart(){std::abort();} // 本测试不执行设备重启。
 const rmt_symbol_word_t* borrowed=nullptr;
 std::size_t symbol_count=0;
 esp_err_t gpio_config(const gpio_config_t* c){CHECK(c->pin_bit_mask==(1ULL<<35) && c->mode==GPIO_MODE_INPUT && c->pull_up_en==1 && c->intr_type==0);++configs;return failure==1?ESP_FAIL:ESP_OK;}
