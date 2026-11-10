@@ -151,7 +151,7 @@
     "components/gagent_camera/support/av_render/LICENSE": "32395cf1ed0b65a896c6cdd93ba06ea08e5ef2349ea80b155bb1699af61efd30",
     "components/gagent_camera/support/av_render/libav_render.a": "094d17fa8e82a05807ca3c22aef41a9f4e26ba766fb81cdd8339d356e7193629",
     "components/gagent_camera/support/esp_peer/LICENSE": "32395cf1ed0b65a896c6cdd93ba06ea08e5ef2349ea80b155bb1699af61efd30",
-    "components/gagent_camera/support/esp_peer/libesp_peer.a": "be3a71f1534123dc66d361e150e3b1d73fae4b9769f537d9122ec59bf5b87c63",
+    "components/gagent_camera/support/esp_peer/libesp_peer.a": "5d0d1fa41caa6466caffbc52739ec10e20d08b5c4cd47082bcf2dd74e00005d2",
     "components/gagent_camera/support/esp_peer/libpeer_default.a": "e2aaa740f33a27f48ec3cef9e65941325bbbf75300ac92241a4b7981b3f0fd9d",
     "components/gagent_camera/support/esp_webrtc/libesp_webrtc.a": "39dbdc4bb0ebddb3db9d2f6ecf23d52c69ece18951abb9131d78ea5370ff4a06",
     "components/gagent_camera/support/media_lib_sal/Kconfig.projbuild": "b2247d6c7d87f726dd9bc270861a7d6118aed6c10900e98dfa42f21541b142fd",
@@ -300,5 +300,15 @@
     "tools/templates/soc/gizwits_protocol.cc.in": "5f0400654a2801fbb0fa9cf618b561f357faa0d7856a945ce813c221bf3f736f",
     "tools/templates/soc/gizwits_protocol.hpp.in": "ff41488dcdcf52c49351b3cd636cd60d5ed7d4660b849b4835219bda4347f438",
     "tools/templates/soc/product_config.hpp.in": "b95aae45e5c42ae2100e96c3ddb6aefa4033e1501748e706b6caaf44532f9736"
-  }
+  },
+  "binary_patches": [
+    {
+      "archive": "components/gagent_camera/support/esp_peer/libesp_peer.a",
+      "members": [
+        "dtls_srtp_v6.c.obj"
+      ],
+      "producer_revision": "a950614594e2f7048d7ae844a3349be6de69087f",
+      "reason": "Align DTLS ECDSA key policy with the Mbed TLS PK module"
+    }
+  ]
 }
