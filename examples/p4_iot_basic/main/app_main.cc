@@ -3,6 +3,7 @@
 #include "gagent/partition_store.hpp"
 #include "mbedtls_md5.hpp"
 #include "esp_log.h"
+#include "memory_log.hpp"
 #ifdef ESP_PLATFORM
 #include "gagent_version.hpp"
 #include "esp_app_desc.h"
@@ -49,6 +50,7 @@ extern "C" void app_main() {
 #ifdef ESP_PLATFORM
     log_identity();
 #endif
+    gagent::board::diagnostics::log_memory("before_start");
 #if GAGENT_COMPACT_2M
     if (gagent_no_tls_init() != ESP_OK) {
         ESP_LOGE("gagent", "Plain TCP backend registration failed");
@@ -70,5 +72,6 @@ extern "C" void app_main() {
     ESP_LOGI("gagent", "startup: writable=%d state=%d available=%d",
              gagent::board::selected.storage_writable,static_cast<int>(state),state==gagent::runtime::BootState::ready);
     gagent::board::start(boot);
+    gagent::board::diagnostics::log_memory("after_start");
     // 此处只检查存储；首次身份初始化、联网及配网由应用启动流程统一处理。
 }

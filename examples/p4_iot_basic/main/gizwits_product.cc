@@ -5,6 +5,7 @@
 #include "gagent/application/application.hpp"
 #include "esp_log.h"
 #include "hardware.hpp"
+#include "memory_log.hpp"
 #ifdef GAGENT_CAMERA_ENABLED
 #include "gagent/camera/service.hpp"
 #endif
@@ -45,6 +46,8 @@ void reset_wifi() noexcept {
 datapoints::DataPoints current{}, last_reported{};
 bool first_report = true, pending = false;
 std::uint64_t last_attempt = 0, last_full = 0;
+constexpr std::uint64_t memory_log_interval_ms = 10000;
+std::uint64_t last_memory_log = 0;
 }
 void attach(runtime::Application& value, runtime::Boot& owner) noexcept { application=&value; boot=&owner; }
 void request_pairing() noexcept { pairing_requested.store(true); }
@@ -58,6 +61,7 @@ void initialize() noexcept {
     first_report = true;
     pending = false;
     last_attempt = last_full = 0;
+    last_memory_log = 0;
 }
 bool apply(const datapoints::DataPoints& candidate, const datapoints::Fields& written) noexcept {
     for (std::size_t i = 0; i < written.size(); ++i)
@@ -70,6 +74,11 @@ bool apply(const datapoints::DataPoints& candidate, const datapoints::Fields& wr
     return true;
 }
 void sample(datapoints::DataPoints& candidate, std::uint64_t now) noexcept {
+    // 复用 Worker 的周期回调，离线和推流期间也持续记录，不额外创建任务。
+    if (now - last_memory_log >= memory_log_interval_ms) {
+        last_memory_log = now;
+        diagnostics::log_memory("runtime");
+    }
     if (application) {
         if (!hardware_attempted) {
             hardware_attempted=true; hardware_ready=hardware::initialize();
