@@ -84,6 +84,7 @@ RGB 灯为 GPIO51 的 WS2812，GRB 顺序。App 的 `start_stream` 与按键共�
 
 SDK 注册 7 个 GAgent 组件，核心、云协议和相机库共用，另按 C5/C6/C61 选择无线适配静态库。定制的 WebRTC 接入代码以摄像头组件内部的配套静态库提供，不展开独立源码组件。mDNS、`esp-sr`、`esp-dl`、Hosted、音视频编解码等 Registry 组件不再随 SDK 提交。第三方组件下载后仍会占用本地磁盘；后续构建可复用下载结果。不要关闭 Component Manager，也不要手改 `managed_components/`。
 
+- [本次发布的编译与测试记录](docs/发布验证.md)
 - [上板验收](docs/上板验收.md)
 - [例程维护与 SDK 升级](docs/维护说明.md)
 

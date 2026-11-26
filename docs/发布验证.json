@@ -1,0 +1,43 @@
+{
+  "tested_commit": "582c5457681fc878a54d9b9489ac10e757ef6114",
+  "idf_revision": "2f8327156dd1f3c010413a6d47c9f86a607be498",
+  "compiler_version": "15.2.0",
+  "examples": [
+    {
+      "example": "c3_iot_basic",
+      "target": "esp32c3",
+      "image_bytes": 1617808,
+      "image_sha256": "a361be92ae7d539268b8a19d409b075003cf9b79d2c35467826aa896ab04bd54",
+      "sdk_manifest_sha256": "26004dfe8d5431879dd6f5d566c67344a4d875f3a169c1c4559cf76abcaf5f52",
+      "linked": true,
+      "producer_sources_compiled": false,
+      "product": "default product with 4 standard datapoints"
+    },
+    {
+      "example": "c5_iot_basic",
+      "target": "esp32c5",
+      "image_bytes": 1727280,
+      "image_sha256": "15c86b0d4a3e3b91f39ea0cc8191357fedad689ea773d3ea20517f91d891c06b",
+      "sdk_manifest_sha256": "b432e7f8e20035539974093864774d1fd2e17e5cd1fe05b12e351102a9f4dec2",
+      "linked": true,
+      "producer_sources_compiled": false,
+      "product": "default product with 4 standard datapoints"
+    },
+    {
+      "example": "p4_iot_basic",
+      "target": "esp32p4",
+      "image_bytes": 3613632,
+      "image_sha256": "adba90aaa32cb187dd6429ecc2efac8d317ac18808e5028436a47e752fef0a2e",
+      "sdk_manifest_sha256": "488b91ef1cc82bc4c1895f90c3fff76aba4606fb061e35e0913c723be7672cec",
+      "linked": true,
+      "producer_sources_compiled": false,
+      "product": "existing P4 camera product"
+    }
+  ],
+  "producer_python_tests": 51,
+  "example_ctest_suites": 3,
+  "basic_project_python_tests": 4,
+  "secrets_in_public_files": false,
+  "flash_performed": false,
+  "hardware_verified": false
+}
