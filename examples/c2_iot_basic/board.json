@@ -1,0 +1,10 @@
+{
+  "mode": "soc",
+  "target": "esp32c2",
+  "flash_size": "4M",
+  "storage_writable": true,
+  "mcu_ota": false,
+  "camera": {
+    "enabled": false
+  }
+}

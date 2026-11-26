@@ -1,0 +1,34 @@
+// 由数据点生成器自动生成。请修改数据点定义后重新生成，不要手改本文件。
+#pragma once
+#include "gagent/protocol/protocol.hpp"
+#include <array>
+namespace gagent::board::datapoints {
+inline constexpr char product_key[] = "@PK@";
+inline constexpr char business_protocol[] = "@PROTOCOL@";
+// P0 操作码由平台 protocolType 决定，与 P0 版本号分别处理。
+inline constexpr std::uint8_t write_action = @WRITE_ACTION@;
+inline constexpr std::uint8_t read_action = @READ_ACTION@;
+inline constexpr std::uint8_t read_response_action = @READ_RESPONSE_ACTION@;
+inline constexpr std::uint8_t report_action = @REPORT_ACTION@;
+inline constexpr std::size_t count = @COUNT@;
+inline constexpr std::array<const char*, count> field_names{{@NAMES@}};
+inline constexpr std::size_t max_payload = @MAX_SIZE@;
+enum class Field : std::size_t {
+@EVENTS@
+};
+using Fields = std::array<bool, count>;
+struct DataPoints {
+@MEMBERS@
+};
+Fields all_fields() noexcept;
+Fields changed(const DataPoints& before, const DataPoints& after) noexcept;
+bool valid(const DataPoints&) noexcept;
+// 输入从字段标志 attr_flags 开始，调用前应去掉 P0 操作码。
+// 输入无效时，不修改状态和已写字段集合。
+protocol::Status decode_control(protocol::Bytes, DataPoints&, Fields&) noexcept;
+// 使用查询响应或主动上报操作码，编码 P0 业务载荷。
+protocol::Status encode_status(const DataPoints&, const Fields&, std::uint8_t action,
+                              std::uint8_t*, std::size_t, std::size_t&) noexcept;
+protocol::Status read_status(protocol::Bytes request, const DataPoints&,
+                            std::uint8_t*, std::size_t, std::size_t&) noexcept;
+}

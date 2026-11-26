@@ -1,0 +1,11 @@
+{
+  "format_version": 1,
+  "product_key_sha256": "7982d56da05bd8e3714a1b4cbfbc65468931b3e8b3b2c2c2af25b142d0db46f9",
+  "protocol_type": "standard",
+  "datapoint_count": 4,
+  "files_sha256": {
+    "datapoints.json": "65ff8a46701f44bf1147a1e9e56eb8cc1a65410a980f32f8093a165ae03ab1ab",
+    "gizwits_protocol.hpp": "2b21ede7fd540aa35a88013a8f387ea6b06b509d8d51439340fb2a6aefdc876d",
+    "gizwits_protocol.cc": "9511d82a4a2a67765c4695404fd6453eec9a8d27aaf4be8837242196b5ec606e"
+  }
+}

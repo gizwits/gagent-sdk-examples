@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "example": "c2_iot_basic",
+  "target": "esp32c2",
+  "idf_revision": "2f8327156dd1f3c010413a6d47c9f86a607be498",
+  "compiler_version": "15.2.0",
+  "sdk_manifest_sha256": "06ccd9c840741eb07d1dc2b319285617ee05b3069528435c1a91f3591dfe605a",
+  "consumer_bin_sha256": "a3754fd4a06839e229735130b42e0c09b5eb617ddf1540d224ffaa0c093c59f4",
+  "consumer_bin_size": 1342096,
+  "ota_slot_size": 1900544,
+  "partition_sha256": "a5f58b8bf6bb16d111151662118c1990fee4396c7f99b4b2e9a32b03fd3a935f",
+  "flash_mb": 4,
+  "xtal_mhz": 26,
+  "minimum_chip_revision": "2.0",
+  "console_baud": 74880,
+  "linked": true,
+  "producer_sources_compiled": false,
+  "producer_python_tests": 51,
+  "example_ctest_groups": 3,
+  "basic_python_tests": 4,
+  "hardware_tested": false
+}

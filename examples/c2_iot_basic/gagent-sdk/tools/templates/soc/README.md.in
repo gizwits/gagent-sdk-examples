@@ -1,0 +1,34 @@
+# @BOARD@ SoC board
+
+由 `tools/generate_soc_board.py` 根据 `datapoints.json` 生成，元信息见 `generation.json`。
+`board.json` 将解析和产品源文件注册到现有固件构建；`board.cc` 连接
+`EspApplication`、`BoardControl` 和公共上报服务，LAN/BLE/MQTT 共用业务。
+
+- `gizwits_protocol.hpp/.cc`：自动生成的数据结构、字段编号、P0 下发解析、查询和上报编码。
+- `gizwits_product.hpp/.cc`：用户代码；`apply()` 处理下发硬件动作，`sample()` 采样或消费外部事件队列。
+- `product_config.hpp`：用户配置，包括云域名、启动开关、迁移策略和可选 PS。
+- `product_secrets.hpp`：可选本地文件（已忽略），例如 `#define GAGENT_SOC_PRODUCT_SECRET "真实PS"`。
+
+首次使用先按硬件填写 `initialize/apply/sample`；默认仅维护内存数据点，未实现继电器、定时器、能耗采集或持久化。
+API 不提供硬件接线和 PS，不从其他产品复制。现有内核允许空 PS；若产品要求 PS，在本地配置中补充。
+仅在同一个 GAgent Worker 调用产品状态/上报函数；SDK 回调或其他任务的采样通过用户有界队列交接。
+上报按变化最多每秒一次、每十分钟全量；`publish` 只表示尝试发送，不保证客户端收到。
+若 `generation.json` 中 `batched=true`，全量状态按字段拆成最多 512 字节的独立 P0 包，
+每秒最多尝试一包；周期内冻结快照，期间收到的变化在下一周期发送。
+客户端必须按掩码合并上报，并按字段子集控制/查询；超出回复缓冲区的全量查询会失败。
+
+离线更新（只刷新协议、数据点 JSON 和生成元信息，保留用户代码和 board 配置）：
+
+```sh
+python3 tools/generate_soc_board.py --pk <本产品PK> --board @BOARD@ --datapoints <最新JSON路径> --update
+```
+
+导出项目固定 IDF 环境后：
+
+```sh
+python3 tools/build_firmware.py --mode soc --board @BOARD@ --build-dir /tmp/gagent-@BOARD@
+```
+
+协议处理使用固定长度缓冲、显式字节序、严格长度/范围检查；非法控制帧不会部分更新数据点。
+标准协议上报完整状态，变长协议使用字段掩码选择上报。P0 业务版本沿用旧 SDK 的 `00000002`；
+不将接口的 `packetVersion` 混作 P0 版本，也不替换公共传输协议。

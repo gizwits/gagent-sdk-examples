@@ -9,7 +9,7 @@ import tempfile
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
-CHIPS = ("c3", "c5")
+CHIPS = ("c2", "c3", "c5")
 PK, PS = "1" * 32, "2" * 32
 
 
@@ -89,7 +89,7 @@ class BasicProjects(unittest.TestCase):
             installer.verify(sdk, json.loads((example / "sdk.lock.json").read_text()))
             self.assertEqual((example / "partitions.csv").read_bytes(), (sdk / "partitions.csv").read_bytes())
             layouts.append((example / "partitions.csv").read_bytes())
-        self.assertEqual(layouts[0], layouts[1])
+        self.assertTrue(all(layout == layouts[0] for layout in layouts))
 
     def test_missing_configuration_has_actionable_cmake_error(self):
         cmake = shutil.which("cmake")

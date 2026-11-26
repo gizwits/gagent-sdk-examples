@@ -1,0 +1,39 @@
+menu "GAgent networking"
+
+config GAGENT_COMPACT_LAN
+    bool "Enable station LAN discovery and control in a 2MB build"
+    default n
+    help
+        Retain the existing authenticated TCP control and UDP discovery service.
+        ESP32-C2 allows one LAN client with one complete frame of send buffering.
+        SoftAP, SmartConfig and mDNS remain controlled by their own policies.
+
+endmenu
+
+menu "GAgent diagnostics"
+
+config GAGENT_TRANSPORT_DIAGNOSTICS
+    bool "Sample Worker and BLE transport performance"
+    default n
+    help
+        Collect timing and traffic counters and print periodic INFO summaries.
+        Disabled builds omit the sampling and counter storage entirely.
+
+config GAGENT_CONTROL_LOG_DEBUG
+    bool "Log successful control requests at DEBUG instead of INFO"
+    default n
+    help
+        Reduce per-request logs for high-rate board protocols. Errors retain
+        their original severity. Other boards keep normal control logs at INFO.
+
+config GAGENT_MCU_DEBUG
+    bool "Print MCU UART RX/TX bytes at INFO"
+    default n
+    help
+        Print raw UART bytes in bounded hex/ASCII rows. RX is MCU to module;
+        TX is module to MCU. Includes handshake, reports, commands, ACKs,
+        heartbeats, OTA and board-specific serial exchanges. RX chunks may
+        contain partial frames or multiple frames, including invalid data.
+        Includes credentials carried on the wire. Requires INFO logging.
+
+endmenu

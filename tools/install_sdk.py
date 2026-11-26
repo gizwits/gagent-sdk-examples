@@ -9,7 +9,7 @@ import tarfile
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
-EXAMPLES = ("p4_iot_basic", "c3_iot_basic", "c5_iot_basic")
+EXAMPLES = ("p4_iot_basic", "c2_iot_basic", "c3_iot_basic", "c5_iot_basic")
 
 def example_lock(name):
     path = ROOT / "examples" / name / "sdk.lock.json"

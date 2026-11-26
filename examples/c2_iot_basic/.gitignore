@@ -1,0 +1,12 @@
+/build*/
+/managed_components/
+/bootloader_components/
+/sdkconfig
+/sdkconfig.old
+/main/product_secrets.hpp
+/main/generated/
+/main/.generated-*/
+*.local.json
+__pycache__/
+*.pyc
+/.sample-*/
