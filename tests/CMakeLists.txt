@@ -23,3 +23,7 @@ if(TARGET gagent_core)
     target_compile_options(p4_product_tests PRIVATE -Wall -Wextra -Werror -fno-exceptions -fno-rtti)
     add_test(NAME p4_example_product COMMAND p4_product_tests)
 endif()
+
+# New developer projects can be configured and syntax-checked without ESP-IDF.
+find_package(Python3 REQUIRED COMPONENTS Interpreter)
+add_test(NAME basic_developer_projects COMMAND "${Python3_EXECUTABLE}" -B "${CMAKE_CURRENT_LIST_DIR}/test_basic_projects.py")

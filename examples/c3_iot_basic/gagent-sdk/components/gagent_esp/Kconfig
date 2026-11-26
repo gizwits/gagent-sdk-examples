@@ -1,0 +1,29 @@
+menu "GAgent memory placement"
+
+config GAGENT_SMALL_ALLOC_RTC
+    bool "Prefer RTC RAM for small CPU-only allocations"
+    default y
+    help
+        Prefer an available RTC heap for allocations up to 256 bytes whose requested
+        capabilities are limited to DEFAULT, INTERNAL, 8BIT and 32BIT. This
+        keeps small metadata from splitting large radio/TLS buffers in SRAM.
+        All requested capabilities remain required. DMA, executable and other
+        special allocations keep the SDK policy. If no compatible RTC heap
+        exists on the target, or RTC RAM is full, retry
+        with the original capabilities using the SDK's preference allocator.
+
+endmenu
+
+menu "GAgent runtime logs"
+config GAGENT_RUNTIME_LOG_UPLOAD_URL
+    string "Runtime log HTTP upload URL"
+    default "http://sdkdevops.gizwitsapi.com/device/logs/batches"
+    help
+        Only used after an explicit MQTT enable command. No UDP or Flash queue.
+config GAGENT_RUNTIME_LOG_UPLOAD_TOKEN
+    string "Product runtime log upload token"
+    default "abcbc5ad5a726bc329a70bf5c8db1e82a7739406c46a62973bbbfe2d787051e2"
+    help
+        16..128 characters. Match DEVICE_LOG_UPLOAD_KEYS for the active cloud PK.
+        An empty token prevents capture. Never use a product/device secret here.
+endmenu

@@ -1,0 +1,25 @@
+{
+  "profile": {
+    "mode": "soc",
+    "beacon": false,
+    "mcu_ota": false,
+    "baud": 115200,
+    "heartbeat_ms": 55000,
+    "ack_timeout_ms": 600,
+    "storage_writable": true,
+    "module_ota": true
+  },
+  "name": "c5_sdk_basic",
+  "partition": "partitions.csv",
+  "board_group": "sdk",
+  "requires": [],
+  "cloud_provider": "gizwits",
+  "ble_protocol": "v2",
+  "target": "esp32c5",
+  "aispeech": {
+    "enabled": false
+  },
+  "camera": {
+    "enabled": false
+  }
+}

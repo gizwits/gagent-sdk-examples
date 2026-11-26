@@ -1,0 +1,2 @@
+# SDK ABI configuration comes from gagent-sdk/sdkconfig.defaults.
+# Product credentials belong in main/product_secrets.hpp, not sdkconfig.

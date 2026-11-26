@@ -1,0 +1,149 @@
+{
+  "name": "机智无计量单插",
+  "packetVersion": "0x00000004",
+  "protocolType": "standard",
+  "product_key": "00000000000000000000000000000000",
+  "entities": [
+    {
+      "display_name": "机智云开发套件",
+      "attrs": [
+        {
+          "display_name": "开关",
+          "name": "power",
+          "data_type": "bool",
+          "position": {
+            "byte_offset": 0,
+            "unit": "bit",
+            "len": 1,
+            "bit_offset": 0
+          },
+          "type": "status_writable",
+          "id": 0,
+          "desc": ""
+        },
+        {
+          "display_name": "指示灯是否启用",
+          "name": "using_led_light",
+          "data_type": "bool",
+          "position": {
+            "byte_offset": 0,
+            "unit": "bit",
+            "len": 1,
+            "bit_offset": 1
+          },
+          "type": "status_writable",
+          "id": 1,
+          "desc": "1、这个值为1的时候，按下则切换插座状态，插座开：灯亮，插座关：灯灭；\n2、这个值为0的时候，灯一直保持灭\n3、只有配置上网后，该值生效\n4、指示灯默认是亮的"
+        },
+        {
+          "display_name": "power_memory",
+          "name": "power_memory",
+          "data_type": "bool",
+          "position": {
+            "byte_offset": 0,
+            "unit": "bit",
+            "len": 1,
+            "bit_offset": 2
+          },
+          "type": "status_writable",
+          "id": 2,
+          "desc": "预留，现在默认是按照断电前的状态"
+        },
+        {
+          "display_name": "倒计时开关",
+          "name": "timer_s",
+          "data_type": "uint32",
+          "position": {
+            "byte_offset": 1,
+            "unit": "byte",
+            "len": 4,
+            "bit_offset": 0
+          },
+          "uint_spec": {
+            "addition": 0,
+            "max": 86400,
+            "ratio": 1,
+            "min": 0
+          },
+          "type": "status_writable",
+          "id": 3,
+          "desc": "倒计时一段时间后开插座或者关插座，精度是秒"
+        }
+      ],
+      "name": "entity0",
+      "id": 0
+    }
+  ],
+  "ui": {
+    "object": {
+      "version": 4,
+      "showEditButton": false
+    },
+    "sections": [
+      {
+        "elements": [
+          {
+            "boolValue": false,
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.power"
+              ],
+              "perm": "W"
+            },
+            "type": "QBooleanElement",
+            "key": "entity0.power",
+            "title": "开关"
+          },
+          {
+            "boolValue": false,
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.using_led_light"
+              ],
+              "perm": "W"
+            },
+            "type": "QBooleanElement",
+            "key": "entity0.using_led_light",
+            "title": "指示灯是否启用"
+          },
+          {
+            "boolValue": false,
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.power_memory"
+              ],
+              "perm": "W"
+            },
+            "type": "QBooleanElement",
+            "key": "entity0.power_memory",
+            "title": "power_memory"
+          },
+          {
+            "title": "倒计时开关",
+            "bind": "floatValue:float",
+            "object": {
+              "action": "entity0",
+              "bind": [
+                "entity0.timer_s"
+              ],
+              "uint_spec": {
+                "max": 86400,
+                "step": 1,
+                "min": 0
+              },
+              "perm": "W"
+            },
+            "value": 0,
+            "key": "entity0.timer_s",
+            "maximumValue": 86400,
+            "minimumValue": 0,
+            "type": "QFloatElement"
+          }
+        ]
+      }
+    ]
+  }
+}

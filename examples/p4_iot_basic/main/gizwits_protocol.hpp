@@ -1,9 +1,10 @@
 // 由数据点生成器自动生成。请修改数据点定义后重新生成，不要手改本文件。
 #pragma once
+#include "product_config.hpp"
 #include "gagent/protocol/protocol.hpp"
 #include <array>
 namespace gagent::board::datapoints {
-inline constexpr char product_key[] = "00000000000000000000000000000000";
+inline constexpr char product_key[] = GAGENT_SOC_PRODUCT_KEY;
 inline constexpr char business_protocol[] = "00000002";
 // P0 操作码由平台 protocolType 决定，与 P0 版本号分别处理。
 inline constexpr std::uint8_t write_action = 17;

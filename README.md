@@ -4,11 +4,33 @@
 
 | 例程 | 硬件 | 演示内容 |
 | --- | --- | --- |
+| [C3 基础联网](examples/c3_iot_basic/README.md) | ESP32-C3，4MB Flash，最低 v1.1 | BLE 配网、数据点收发、可扩展业务回调 |
+| [C5 基础联网](examples/c5_iot_basic/README.md) | ESP32-C5，4MB Flash，最低 v1.2 | BLE 配网、数据点收发、可扩展业务回调 |
 | [P4 联网与按键推流](examples/p4_iot_basic/README.md) | WT9932P4C61-TINY，P4＋C61 SDIO、SC2336 | BLE 配网、IoT 收发、RGB 状态灯、按键/数据点控制视频推流 |
 
-首个例程使用已授权公开的测试 PK／PS。摄像头控制已接入真实 SDK，喂食和定时数据点仅在内存中示范；正式产品请替换凭据并实现自己的业务。
+例程不包含 PK／PS，使用前请在本地配置自己的产品凭据。摄像头控制已接入真实 SDK，喂食和定时数据点仅在内存中示范；正式产品请替换凭据并实现自己的业务。
 
-## 快速开始
+## C3 / C5 开发者快速开始
+
+两个基础工程均附带对应芯片的二进制 SDK，以及默认产品的 4 个数据点样例：`power`、`using_led_light`、`power_memory`、`timer_s`。不依赖外部 MCU，不预设 GPIO 外设。以 C3 为例（C5 将目录名换为 `c5_iot_basic`）：
+
+```sh
+cd examples/c3_iot_basic
+cp main/product_secrets.example.hpp main/product_secrets.hpp
+# 用编辑器填写自己的 PK/PS；已有本地配置时不要覆盖。
+python3 gagent-sdk/configure_product.py
+# 加载本地 ESP-IDF 6.1 环境后：
+idf.py build
+idf.py -p YOUR_SERIAL_PORT flash monitor
+```
+
+脚本按本地 PK 获取平台数据点，PS 不发送到网络；也可使用 `--datapoints product.local.json` 离线导入。生成文件位于 Git 忽略的 `main/generated/`；重新生成不覆盖业务回调。缺少配置或更换 PK 后未重新生成时，会明确阻止构建。平台公开接口目前为 HTTP，详见各工程 README。
+
+默认产品的脱敏 JSON 和协议样例位于各工程 `sample/`。填写该产品的配套本地 PK/PS 后，执行 `python3 gagent-sdk/configure_product.py --sample` 可离线重建。更新公开样例使用 `--export-sample`；它会同步协议代码、脱敏 JSON 和校验信息，不覆盖业务回调。完整步骤见 [C3 README](examples/c3_iot_basic/README.md#3-生成与重建数据点) / [C5 README](examples/c5_iot_basic/README.md#3-生成与重建数据点)。
+
+SDK 校验：根目录执行 `python3 tools/install_sdk.py --verify-only` 校验全部例程；加 `--example c3_iot_basic` 或 `--example c5_iot_basic` 可单独检查。各基础工程有自己的 `sdk.lock.json`。C61 独立工程暂缓。
+
+## P4 摄像头快速开始
 
 1. 准备 `sdk.lock.json` 指定提交的 ESP-IDF 6.1 和对应工具链，使用 CMake 3.24 或更新版本，加载 `export.sh` 环境。
 2. 仓库已包含匹配的精简摄像头 SDK，无需另行获取 SDK 包。在仓库根目录校验：
@@ -17,7 +39,15 @@
 python3 tools/install_sdk.py --verify-only
 ```
 
-3. 构建，连接测试板并烧录。首次构建需要联网访问乐鑫组件仓库：
+3. 复制本地凭据模板，填写自己的 PK/PS（须匹配示例的数据点定义）；`product_secrets.hpp` 已被 Git 忽略，缺少有效长度的凭据会在编译时报错：
+
+```sh
+cp examples/p4_iot_basic/main/product_secrets.example.hpp examples/p4_iot_basic/main/product_secrets.hpp
+```
+
+已有本地配置时不要覆盖；按[例程说明](examples/p4_iot_basic/README.md)配置产品。
+
+4. 构建，连接测试板并烧录。首次构建需要联网访问乐鑫组件仓库：
 
 ```sh
 cd examples/p4_iot_basic
@@ -39,7 +69,8 @@ RGB 灯为 GPIO51 的 WS2812，GRB 顺序。App 的 `start_stream` 与按键共�
 
 ## 从哪里修改
 
-- `main/product_config.hpp`：产品凭据、蓝牙名称、云地址。
+- `main/product_secrets.hpp`：本地 PK/PS（Git 忽略）；公开模板为 `main/product_secrets.example.hpp`。
+- `main/product_config.hpp`：凭据校验、蓝牙名称、云地址。
 - `main/gizwits_product.cc`：数据点下发、按键控制与状态采样。
 - `main/hardware.cc`、`main/board_ui.hpp`：GPIO/RMT、消抖和灯效规则。
 - `main/board.cc`：SDK 与可选摄像头服务的启动装配。
@@ -49,7 +80,7 @@ RGB 灯为 GPIO51 的 WS2812，GRB 顺序。App 的 `start_stream` 与按键共�
 
 ## 版本与验收
 
-例程源码、中文文档、数据点快照和精简 SDK 均进入 Git。`sdk.lock.json` 校验 SDK 文件；`main/idf_component.yml` 声明第三方组件的精确版本，`dependencies.lock` 固定组件内容。构建通过 ESP-IDF Component Manager 下载依赖到 `managed_components/`，该目录与构建产物一同被忽略。
+例程源码、中文文档和精简 SDK 均进入 Git。P4 保留脱敏数据点快照；C3/C5 按开发者的本地 PK 生成，数据点文件不进入 Git。各例程的锁定文件校验 SDK，P4 沿用根目录 `sdk.lock.json`；`main/idf_component.yml` 声明第三方组件的精确版本，`dependencies.lock` 固定组件内容。构建通过 ESP-IDF Component Manager 下载依赖到 `managed_components/`，该目录与构建产物一同被忽略。
 
 SDK 注册 7 个 GAgent 组件，核心、云协议和相机库共用，另按 C5/C6/C61 选择无线适配静态库。定制的 WebRTC 接入代码以摄像头组件内部的配套静态库提供，不展开独立源码组件。mDNS、`esp-sr`、`esp-dl`、Hosted、音视频编解码等 Registry 组件不再随 SDK 提交。第三方组件下载后仍会占用本地磁盘；后续构建可复用下载结果。不要关闭 Component Manager，也不要手改 `managed_components/`。
 

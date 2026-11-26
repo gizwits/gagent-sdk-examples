@@ -2,7 +2,11 @@
 
 用于 WT9932P4C61-TINY：ESP32-P4、16 MB Flash、32 MB PSRAM，C61 SDIO 接线继承仓库的 `gagent_cam_esp32p4`。MCU 串口不参与这个示例。本例程使用摄像头 SDK，演示联网收发与按键推流。C61 需已有兼容 ESP-Hosted 2.12.11 的从机固件。
 
-这是可复制到仓库外的 ESP-IDF 工程。`main/product_config.hpp` 内置获准公开的测试 PS，PK 位于生成的 `main/gizwits_protocol.hpp`；均只属于测试应用，不编入通用 SDK 库。正式产品请替换产品配置及数据点。
+这是可复制到仓库外的 ESP-IDF 工程。PK/PS 只从 Git 忽略的 `main/product_secrets.hpp` 读取，不随公开源码提供。使用自己的产品时，凭据必须与数据点定义匹配。
+
+首次构建前，复制 `main/product_secrets.example.hpp` 为 `main/product_secrets.hpp`，填写 `GAGENT_SOC_PRODUCT_KEY` 和 `GAGENT_SOC_PRODUCT_SECRET`（各 32 个字符）；已有配置时不要覆盖。未填写时编译会报错。分享工程时排除该本地文件及构建产物。
+
+`main/datapoints.json`、`main/generation.json` 中全零的 `product_key` 仅为公开快照占位符，不用于设备身份。SDK 包保持原样以通过哈希校验；包内 README 关于例程内置测试凭据的旧说明不适用于本仓库。
 
 ## 构建与测试
 
@@ -58,20 +62,24 @@ idf.py -p YOUR_SERIAL_PORT flash monitor
 
 ## 客户编辑位置
 
-- `main/product_config.hpp`：PS、云地址、蓝牙名称；PK 由数据点生成器维护。
+- `main/product_secrets.hpp`：本地 PK/PS，已被 Git 忽略。
+- `main/product_config.hpp`：凭据校验、云地址、蓝牙名称。
 - `main/gizwits_product.cc`：`apply()` 接收数据点字段，`sample()` 更新传感器/业务状态。已接入按键、状态灯和可选摄像头控制，其余数据点保留内存示范。
 - `main/hardware.cc`、`main/board_ui.hpp`：GPIO/RMT 驱动、消抖和灯效优先级。
 - `main/board.cc`：已提供完整启动装配，默认 BLE 首次配网、关闭自动 OTA 下载。
 
 业务回调运行在 GAgent Worker，必须非阻塞。其他任务可调用 `product::request_pairing()`；它只设置原子请求，由 Worker 进入 BLE 配网，不直接跨任务操作 SDK。BOOT 长按重置同样在 Worker 执行，复用 SDK 的 `Boot::reset(config::Reset::wifi)`，不直接擦除分区。
 
-产品定义升级时在工程外执行随 SDK 附带的工具：
+产品定义升级时，在本工程目录运行：
 
 ```sh
-python3 gagent-sdk/tools/generate_soc_board.py --pk 00000000000000000000000000000000 --datapoints main/datapoints.json --project-dir . --update
+# 重新生成已脱敏的公开数据点快照
+python3 tools/update_datapoints.py
+# 使用平台导出的新数据点；该本地 JSON 文件已被 Git 忽略
+python3 tools/update_datapoints.py --datapoints main/datapoints.local.json
 ```
 
-只更新协议、快照和生成元信息，保留业务回调、凭据、启动与分区。更换 PK 应创建新模板，不能用 `--update` 覆盖另一个产品。模板配置与生成源码都属于应用，SDK 库中不包含测试产品身份。
+工具校验平台 JSON 的 PK 与本地配置一致，再更新协议、脱敏快照和生成记录，保留业务回调、凭据、启动与分区。生成代码始终引用本地 PK，快照仅保留全零占位符。不要直接使用 SDK 原始生成器更新本工程，它会将真实 PK 写回源码。更换产品时同步修改本地凭据、数据点和业务实现。
 
 ## 容量与兼容性
 

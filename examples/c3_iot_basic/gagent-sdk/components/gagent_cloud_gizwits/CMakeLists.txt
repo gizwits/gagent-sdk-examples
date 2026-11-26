@@ -1,0 +1,5 @@
+idf_component_register(INCLUDE_DIRS "include" REQUIRES espressif__cjson gagent_core mbedtls)
+add_prebuilt_library(gagent_binary_gagent_cloud_gizwits "${CMAKE_CURRENT_LIST_DIR}/libgagent_cloud_gizwits.a" REQUIRES espressif__cjson gagent_core mbedtls)
+target_link_libraries(${COMPONENT_LIB} INTERFACE gagent_binary_gagent_cloud_gizwits)
+target_compile_features(${COMPONENT_LIB} INTERFACE cxx_std_17)
+target_compile_options(${COMPONENT_LIB} INTERFACE "$<$<COMPILE_LANGUAGE:CXX>:-fno-exceptions;-fno-rtti>")

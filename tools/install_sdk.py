@@ -9,7 +9,13 @@ import tarfile
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
-EXAMPLE = ROOT / "examples/p4_iot_basic"
+EXAMPLES = ("p4_iot_basic", "c3_iot_basic", "c5_iot_basic")
+
+def example_lock(name):
+    path = ROOT / "examples" / name / "sdk.lock.json"
+    if name == "p4_iot_basic":
+        path = ROOT / "sdk.lock.json"
+    return json.loads(path.read_text())
 
 
 def verify(sdk, lock):
@@ -50,15 +56,17 @@ def main():
     source.add_argument("--sdk-dir", type=Path, help="已解压的 SDK 根目录")
     source.add_argument("--archive", type=Path, help="本地 SDK tar.gz 包，需要 Python 3.12 或更新版本")
     source.add_argument("--verify-only", action="store_true", help="仅校验当前已安装的 SDK")
+    parser.add_argument("--example", choices=EXAMPLES, help="指定例程；仅校验时默认全部，安装时默认 p4_iot_basic")
     args = parser.parse_args()
-    lock = json.loads((ROOT / "sdk.lock.json").read_text())
-    destination = EXAMPLE / "gagent-sdk"
+    name = args.example or "p4_iot_basic"
+    destination = ROOT / "examples" / name / "gagent-sdk"
     try:
         if args.verify_only:
-            verify(destination, lock)
-            print("本地 SDK 完整性校验通过")
+            for example in ((args.example,) if args.example else EXAMPLES):
+                verify(ROOT / "examples" / example / "gagent-sdk", example_lock(example))
+                print(example + "：本地 SDK 完整性校验通过")
         elif args.sdk_dir:
-            install(args.sdk_dir.resolve(), destination, lock)
+            install(args.sdk_dir.resolve(), destination, example_lock(name))
         else:
             # data 过滤器拒绝目录穿越及危险的归档条目，禁止直接解压到工程。
             with tempfile.TemporaryDirectory(prefix="gagent-sdk-unpack-") as temporary:
@@ -68,7 +76,7 @@ def main():
                 sdk = unpacked / "gagent-sdk"
                 if not sdk.is_dir():
                     raise ValueError("压缩包中缺少 gagent-sdk 根目录")
-                install(sdk, destination, lock)
+                install(sdk, destination, example_lock(name))
     except (OSError, ValueError, KeyError, tarfile.TarError) as error:
         parser.exit(1, "SDK 安装失败：" + str(error) + "\n")
 

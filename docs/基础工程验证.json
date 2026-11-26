@@ -1,0 +1,43 @@
+{
+  "idf_revision": "2f8327156dd1f3c010413a6d47c9f86a607be498",
+  "compiler_version": "15.2.0",
+  "producer_base_commit": "ce25d99fc60e",
+  "producer_worktree_changes": true,
+  "partition_source": "new-gagent/baseline/partitions/partitions.csv",
+  "credential_fixture": "user-supplied default product; credentials kept in ignored local files",
+  "datapoint_fixture": "published sample/ snapshot, 4 standard datapoints",
+  "hardware_verified": false,
+  "flash_performed": false,
+  "examples": [
+    {
+      "example": "c3_iot_basic",
+      "target": "esp32c3",
+      "linked": true,
+      "producer_sources_compiled": false,
+      "sdk_manifest_sha256": "26004dfe8d5431879dd6f5d566c67344a4d875f3a169c1c4559cf76abcaf5f52",
+      "consumer_bin_sha256": "a361be92ae7d539268b8a19d409b075003cf9b79d2c35467826aa896ab04bd54",
+      "image_bytes": 1617808,
+      "ota_slot_bytes": 1900544,
+      "ota_remaining_bytes": 282736,
+      "partition_sha256": "a5f58b8bf6bb16d111151662118c1990fee4396c7f99b4b2e9a32b03fd3a935f"
+    },
+    {
+      "example": "c5_iot_basic",
+      "target": "esp32c5",
+      "linked": true,
+      "producer_sources_compiled": false,
+      "sdk_manifest_sha256": "b432e7f8e20035539974093864774d1fd2e17e5cd1fe05b12e351102a9f4dec2",
+      "consumer_bin_sha256": "15c86b0d4a3e3b91f39ea0cc8191357fedad689ea773d3ea20517f91d891c06b",
+      "image_bytes": 1727280,
+      "ota_slot_bytes": 1900544,
+      "ota_remaining_bytes": 173264,
+      "partition_sha256": "a5f58b8bf6bb16d111151662118c1990fee4396c7f99b4b2e9a32b03fd3a935f"
+    }
+  ],
+  "datapoint_names": [
+    "power",
+    "using_led_light",
+    "power_memory",
+    "timer_s"
+  ]
+}

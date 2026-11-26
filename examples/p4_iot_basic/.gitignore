@@ -4,3 +4,6 @@
 /sdkconfig.old
 /main/product_secrets.hpp
 /bootloader_components/
+
+# 平台导出的原始数据点可能包含真实 PK。
+*.local.json

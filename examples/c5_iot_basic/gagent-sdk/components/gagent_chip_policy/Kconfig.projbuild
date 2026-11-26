@@ -1,0 +1,15 @@
+# Extend the pinned SDK's C5 revision choice without patching shared SDK files.
+# This file is loaded by both the application and bootloader.
+if IDF_TARGET_ESP32C5
+
+choice ESP32C5_REV_MIN
+    default ESP32C5_REV_MIN_102
+    config ESP32C5_REV_MIN_102
+        bool "Rev v1.2 (GAgent minimum)"
+endchoice
+
+config ESP32C5_REV_MIN_FULL
+    int
+    default 102 if ESP32C5_REV_MIN_102
+
+endif

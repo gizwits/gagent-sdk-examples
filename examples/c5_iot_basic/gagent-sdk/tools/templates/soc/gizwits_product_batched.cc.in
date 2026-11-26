@@ -1,0 +1,94 @@
+// Product-owned file: --update never overwrites this file.
+#include "gizwits_product.hpp"
+#include <algorithm>
+namespace gagent::board::product {
+namespace {
+// Worker-owned static scratch avoids putting several large states on its stack.
+datapoints::DataPoints current{}, last_reported{}, report_state{}, candidate{};
+datapoints::Fields requested{}, remaining{};
+std::array<std::uint8_t, 512> payload{};
+bool first_report = true, attempted = false, full_cycle = false;
+std::uint64_t last_attempt = 0, last_full = 0;
+bool any(const datapoints::Fields& fields) noexcept {
+    return std::any_of(fields.begin(), fields.end(), [](bool value) { return value; });
+}
+}
+void initialize() noexcept {
+    current = {};
+    // Set product defaults here. No hardware behavior is inferred from JSON.
+    last_reported = report_state = candidate = current;
+    requested = remaining = {};
+    first_report = true;
+    attempted = full_cycle = false;
+    last_attempt = last_full = 0;
+}
+bool apply(const datapoints::DataPoints& next, const datapoints::Fields& written) noexcept {
+    (void)next;
+    (void)written;
+    // Implement nonblocking hardware writes; return false before side effects
+    // if a transaction cannot be accepted.
+    return true;
+}
+void sample(datapoints::DataPoints& next, std::uint64_t now) noexcept {
+    (void)next;
+    (void)now;
+    // Consume hardware events here, on the same Worker as control().
+}
+protocol::Status control(protocol::Bytes input, std::uint8_t* output,
+                         std::size_t capacity, std::size_t& written) noexcept {
+    written = 0;
+    if (!input.data || !input.size) return protocol::Status::malformed;
+    // The runtime owns a bounded response buffer. Oversized queries fail
+    // explicitly; clients must query disjoint field subsets, never truncate.
+    if (input.data[0] == datapoints::read_action)
+        return datapoints::read_status(input, current, output, capacity, written);
+    if (input.data[0] != datapoints::write_action) return protocol::Status::unsupported;
+    candidate = current;
+    datapoints::Fields fields{};
+    const auto status = datapoints::decode_control({input.data+1, input.size-1}, candidate, fields);
+    if (status != protocol::Status::ok) return status;
+    if (!product::apply(candidate, fields)) return protocol::Status::handler_error;
+    current = candidate;
+    for (std::size_t i=0; i<fields.size(); ++i) requested[i] = requested[i] || fields[i];
+    return protocol::Status::ok;
+}
+void tick(reports::Service& reports, std::uint64_t now) noexcept {
+    candidate = current;
+    sample(candidate, now);
+    if (datapoints::valid(candidate)) current = candidate;
+    if (attempted && now-last_attempt < 1000) return;
+    if (!any(remaining)) {
+        full_cycle = first_report || now-last_full >= 600000;
+        remaining = full_cycle ? datapoints::all_fields() : datapoints::changed(last_reported, current);
+        for (std::size_t i=0; i<remaining.size(); ++i) remaining[i] = remaining[i] || requested[i];
+        if (!any(remaining)) return;
+        report_state = current;
+        requested = {};
+    }
+    // Keep a stable cycle snapshot. Writes received during a cycle are picked
+    // up in the next one, including repeated writes of the same value.
+    datapoints::Fields batch{};
+    std::size_t size = 0;
+    for (std::size_t i=0; i<remaining.size(); ++i) {
+        if (!remaining[i]) continue;
+        batch[i] = true;
+        const auto result = datapoints::encode_status(report_state, batch, datapoints::report_action,
+                                                      payload.data(), payload.size(), size);
+        if (result == protocol::Status::too_large) batch[i] = false;
+        else if (result != protocol::Status::ok) return;
+    }
+    if (!any(batch)) return; // Generator requires each individual field to fit.
+    if (datapoints::encode_status(report_state, batch, datapoints::report_action,
+                                payload.data(), payload.size(), size) != protocol::Status::ok) return;
+    attempted = true;
+    last_attempt = now;
+    if (!reports.publish({payload.data(), size})) return;
+    for (std::size_t i=0; i<remaining.size(); ++i) if (batch[i]) remaining[i] = false;
+    if (!any(remaining)) {
+        last_reported = report_state;
+        first_report = false;
+        if (full_cycle) last_full = now;
+    }
+    // publish means fanout attempted, not acknowledged delivery.
+}
+}

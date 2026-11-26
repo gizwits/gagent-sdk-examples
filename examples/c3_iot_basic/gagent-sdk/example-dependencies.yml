@@ -1,0 +1,9 @@
+# SDK third-party dependencies; exact producer versions.
+dependencies:
+  idf: ">=6.0"
+  espressif/cjson:
+    version: "==1.7.19"
+  espressif/mdns:
+    version: "==1.12.0"
+  espressif/mqtt:
+    version: "==1.0.0"

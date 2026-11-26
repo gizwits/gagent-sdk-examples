@@ -1,0 +1,7 @@
+idf_component_register(INCLUDE_DIRS "include" LDFRAGMENTS "flash_rom.lf" REQUIRES app_update bootloader_support bt esp-tls esp_driver_gpio esp_driver_uart esp_event esp_http_client esp_hw_support esp_netif esp_partition esp_system esp_timer esp_wifi espcoredump espressif__cjson espressif__mdns espressif__mqtt freertos gagent_chip_policy gagent_core lwip mbedtls nvs_flash tcp_transport)
+add_prebuilt_library(gagent_binary_gagent_esp "${CMAKE_CURRENT_LIST_DIR}/libgagent_esp.a" REQUIRES app_update bootloader_support bt esp-tls esp_driver_gpio esp_driver_uart esp_event esp_http_client esp_hw_support esp_netif esp_partition esp_system esp_timer esp_wifi espcoredump espressif__cjson espressif__mdns espressif__mqtt freertos gagent_chip_policy gagent_core lwip mbedtls nvs_flash tcp_transport)
+target_link_libraries(${COMPONENT_LIB} INTERFACE gagent_binary_gagent_esp)
+target_compile_features(${COMPONENT_LIB} INTERFACE cxx_std_17)
+target_compile_options(${COMPONENT_LIB} INTERFACE "$<$<COMPILE_LANGUAGE:CXX>:-fno-exceptions;-fno-rtti>")
+target_link_libraries(${COMPONENT_LIB} INTERFACE "-Wl,-u,_ZnwjRKSt9nothrow_t" "-Wl,-u,_ZnajRKSt9nothrow_t")
+target_link_libraries(${COMPONENT_LIB} INTERFACE "-Wl,--wrap=heap_caps_malloc" "-Wl,--wrap=heap_caps_calloc")

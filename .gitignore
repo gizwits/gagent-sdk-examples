@@ -10,3 +10,6 @@ __pycache__/
 **/product_secrets.hpp
 /artifacts/
 /.vscode/
+
+# 平台导出的原始数据点可能包含真实 PK。
+*.local.json
